@@ -14,12 +14,10 @@ import { ToolboxModule } from './toolbox/toolbox.module';
 	imports: [
 		BrowserModule,
 		NgReduxModule,
-		AppComponent,
 		CanvasModule,
 		StoreModule,
 		ToolboxModule,
 	],
-	providers: [],
 	bootstrap: [AppComponent],
 })
 export class AppModule { }
