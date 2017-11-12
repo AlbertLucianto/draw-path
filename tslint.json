@@ -21,7 +21,8 @@
     "import-spacing": true,
     "indent": [
       true,
-      "spaces"
+      "tabs",
+      2
     ],
     "interface-over-type-literal": true,
     "label-position": true,
@@ -70,6 +71,12 @@
     "no-trailing-whitespace": true,
     "no-unnecessary-initializer": true,
     "no-unused-expression": true,
+    "no-unused-variable": [
+      true,
+      {
+        "ignore-pattern": "^_"
+      }
+    ],
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
@@ -136,6 +143,17 @@
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
     "directive-class-suffix": true,
-    "invoke-injectable": true
+    "invoke-injectable": true,
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "always",
+        "singleline": "never"
+      }
+    ],
+    "no-consecutive-blank-lines": true,
+    "cyclomatic-complexity": [true, 20],
+    "space-before-function-paren": [true, "never"],
+    "ordered-imports": true
   }
 }
