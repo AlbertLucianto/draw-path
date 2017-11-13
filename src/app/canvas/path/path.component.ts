@@ -3,7 +3,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 @Component({
 	selector: 'app-path',
 	templateUrl: './path.component.html',
-	styleUrls: ['./path.component.css'],
+	styleUrls: ['./path.component.scss'],
 	encapsulation: ViewEncapsulation.Emulated, // default
 	// about encapsulation: angular-2-training-book.rangle.io/handout/advanced-components/view_encapsulation.html
 })
