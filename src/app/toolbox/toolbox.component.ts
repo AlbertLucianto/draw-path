@@ -8,5 +8,5 @@ import { PentoolComponent } from './pentool/pentool.component';
 	encapsulation: ViewEncapsulation.None,
 })
 export class ToolboxComponent {
-	private toolList = ['pentool', 'pentool', 'pentool'];
+	public toolList = ['selectiontool', 'pentool'];
 }
