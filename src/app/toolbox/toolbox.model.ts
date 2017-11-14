@@ -13,10 +13,17 @@ export class ToolboxState implements IToolboxState {
 }
 
 export namespace ActionCreator {
-	export class SelectToolAction implements Action {
+	export abstract class CustomAction {
+		toObject = (): Object => Object.keys(this).reduce((acc, key) => {
+			acc[key] = this[key];
+			return acc;
+		}, {})
+	}
+	export class SelectToolAction extends CustomAction implements Action {
 		type = ToolboxActionType.SELECT_TOOL;
 		toolName: ToolName;
 		constructor(toolName: ToolName) {
+			super();
 			this.toolName = toolName;
 		}
 	}

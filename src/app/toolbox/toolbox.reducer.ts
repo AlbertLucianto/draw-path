@@ -6,7 +6,7 @@ import {
 	ToolboxState,
 } from './toolbox.model';
 
-export const toolboxReducer: Reducer<IToolboxState> = (state: IToolboxState = new ToolboxState(ToolName.PenTool), action: Action) => {
+export const toolboxReducer: Reducer<IToolboxState> = (state: IToolboxState = new ToolboxState(ToolName.SelectionTool), action: Action) => {
 	switch (action.type) {
 		case ToolboxActionType.SELECT_TOOL:
 			return new ToolboxState((<ActionCreator.SelectToolAction>action).toolName);

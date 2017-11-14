@@ -13,5 +13,7 @@ import { ActionCreator } from '../toolbox.model';
 })
 export class PenToolComponent extends ToolBaseComponent implements OnInit {
 	ngOnInit() { }
-	@dispatch() selectTool = () => ({ ...(new ActionCreator.SelectToolAction(this.context.toolName)) });
+	@dispatch() selectTool = () => {
+		return new ActionCreator.SelectToolAction(this.context.toolName).toObject();
+	}
 }
