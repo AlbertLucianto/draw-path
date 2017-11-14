@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { PentoolComponent } from './pentool/pentool.component';
-import { SelectiontoolComponent } from './selectiontool/selectiontool.component';
+import { PenToolComponent } from './pentool/pentool.component';
+import { SelectionToolComponent } from './selectiontool/selectiontool.component';
 import { ToolContainerComponent } from './tool/tool.container.component';
 import { ToolDirective } from './tool/tool.directive';
 import { ToolboxComponent } from './toolbox.component';
@@ -13,13 +13,13 @@ import { ToolboxComponent } from './toolbox.component';
 	declarations: [
 		ToolboxComponent,
 		ToolContainerComponent,
-		PentoolComponent,
-		SelectiontoolComponent,
+		PenToolComponent,
+		SelectionToolComponent,
 		ToolDirective,
 	],
 	entryComponents: [
-		PentoolComponent,
-		SelectiontoolComponent,
+		PenToolComponent,
+		SelectionToolComponent,
 	],
 	exports: [
 		ToolboxComponent,

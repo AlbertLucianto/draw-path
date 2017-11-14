@@ -1,13 +1,17 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { dispatch } from '@angular-redux/store';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { ToolBase } from '../tool/tool.base.component';
+import { ToolBaseComponent } from '../tool/tool.base.component';
+import { ActionCreator } from '../toolbox.model';
 
 @Component({
 	selector: 'app-pentool',
 	templateUrl: './pentool.component.html',
 	styleUrls: ['./pentool.component.scss'],
 	encapsulation: ViewEncapsulation.Emulated,
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PentoolComponent extends ToolBase implements OnInit {
+export class PenToolComponent extends ToolBaseComponent implements OnInit {
 	ngOnInit() { }
+	@dispatch() selectTool = () => ({ ...(new ActionCreator.SelectToolAction(this.context.toolName)) });
 }

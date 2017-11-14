@@ -1,22 +1,24 @@
 import {
+	AfterViewInit,
 	Component,
 	ComponentFactoryResolver,
 	ComponentRef,
 	Input,
+	OnChanges,
 	OnDestroy,
-	OnInit,
 	ViewChild,
 	ViewContainerRef,
 } from '@angular/core';
 
-import { PentoolComponent } from '../pentool/pentool.component';
-import { SelectiontoolComponent } from '../selectiontool/selectiontool.component';
-import { ToolBase } from './tool.base.component';
+import { PenToolComponent } from '../pentool/pentool.component';
+import { SelectionToolComponent } from '../selectiontool/selectiontool.component';
+import { ToolName } from '../toolbox.constant';
+import { IToolContext, ToolBaseComponent } from './tool.base.component';
 import { ToolDirective } from './tool.directive';
 
 const mappings = {
-	pentool: PentoolComponent,
-	selectiontool: SelectiontoolComponent,
+	[ToolName.PenTool]: PenToolComponent,
+	[ToolName.SelectionTool]: SelectionToolComponent,
 };
 
 const getComponentType = (typeName: string) => {
@@ -29,19 +31,25 @@ const getComponentType = (typeName: string) => {
 	templateUrl: './tool.container.component.html',
 	styleUrls: ['./tool.container.component.scss'],
 })
-export class ToolContainerComponent implements OnInit, OnDestroy {
+export class ToolContainerComponent implements AfterViewInit, OnDestroy, OnChanges {
 	componentRef: ComponentRef<Object>;
+	instance: ToolBaseComponent;
 	@ViewChild(ToolDirective, { read: ViewContainerRef }) toolHost: ViewContainerRef;
-	@Input() context: any;
+	@Input() context: IToolContext;
 	@Input() type: string;
 	constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
-	ngOnInit() {
+	ngAfterViewInit() {
 		if (this.type) {
 			const componentType = getComponentType(this.type);
 			const factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
 			this.componentRef = this.toolHost.createComponent(factory);
-			const instance = <ToolBase>this.componentRef.instance;
-			instance.context = this.context;
+			this.instance = <ToolBaseComponent>this.componentRef.instance;
+			this.instance.context = this.context;
+		}
+	}
+	ngOnChanges() {
+		if (this.instance) {
+			this.instance.context = this.context;
 		}
 	}
 	ngOnDestroy() {

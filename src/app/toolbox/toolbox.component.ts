@@ -1,6 +1,14 @@
+import { select, WithSubStore } from '@angular-redux/store';
 import { Component, ViewEncapsulation } from '@angular/core';
-import { PentoolComponent } from './pentool/pentool.component';
+import { Observable } from 'rxjs/Observable';
 
+import { ToolName } from './toolbox.constant';
+import { toolboxReducer } from './toolbox.reducer';
+
+@WithSubStore({
+	basePathMethodName: 'getSubPath',
+	localReducer: toolboxReducer,
+})
 @Component({
 	selector: 'app-toolbox',
 	templateUrl: './toolbox.component.html',
@@ -8,5 +16,10 @@ import { PentoolComponent } from './pentool/pentool.component';
 	encapsulation: ViewEncapsulation.None,
 })
 export class ToolboxComponent {
-	public toolList = ['selectiontool', 'pentool'];
+	public toolList = [
+		ToolName.SelectionTool,
+		ToolName.PenTool,
+	];
+	@select() readonly selected$: Observable<ToolName>;
+	getSubPath = () => ['toolbox'];
 }

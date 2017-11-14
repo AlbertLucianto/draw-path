@@ -4,8 +4,13 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: white;
+	background: #FCFCFC;
 	border-radius: 5px;
-	margin: 5px;
-	box-shadow: 0 5px 15px -5px rgba(0,0,0,.15);
+	margin: 10px;
+	border: 1px solid rgba(0,0,0,0);
+	&.active {
+		background: white;
+		box-shadow: 0 5px 25px -5px rgba(0,0,0,.3);
+		border: 1px solid rgb(128, 0, 255);
+	}
 }
