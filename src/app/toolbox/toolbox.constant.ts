@@ -5,4 +5,5 @@ export enum ToolName {
 
 export enum ToolboxActionType {
 	SELECT_TOOL = 'TOOLBOX.SELECT_TOOL',
+	PLACE_ANCHOR = 'TOOLBOX.PLACE_ANCHOR',
 }

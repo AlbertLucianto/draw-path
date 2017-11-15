@@ -2,7 +2,7 @@ import { dispatch } from '@angular-redux/store';
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { ToolBaseComponent } from '../tool/tool.base.component';
-import { ActionCreator } from '../toolbox.model';
+import { SelectToolAction } from '../toolbox.action';
 
 @Component({
 	selector: 'app-selectiontool',
@@ -13,5 +13,5 @@ import { ActionCreator } from '../toolbox.model';
 })
 export class SelectionToolComponent extends ToolBaseComponent implements OnInit {
 	ngOnInit() { }
-	@dispatch() selectTool = () => new ActionCreator.SelectToolAction(this.context.toolName).toObject();
+	@dispatch() selectTool = () => new SelectToolAction(this.context.toolName).toObject();
 }
