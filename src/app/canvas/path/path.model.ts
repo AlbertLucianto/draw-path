@@ -1,9 +1,11 @@
-import { Anchor } from '../anchor/anchor.model';
+import { BaseAnchor } from '../anchor/anchor.model';
 import { IPosition } from '../canvas.model';
+import { DrawableType } from '../drawable/drawable.constant';
 import { Drawable } from '../drawable/drawable.model';
 
 export class Path extends Drawable {
-	children?: Array<Anchor>;
+	type = DrawableType.Path;
+	children?: Array<BaseAnchor>;
 
 	toString = (): string =>
 		this.children.reduce((acc, anchor) => `${acc} ${anchor.toString()}`, '')
@@ -16,7 +18,7 @@ export class Path extends Drawable {
 		const init = Object.assign({}, this);
 		const newPath = new Path(init);
 		newPath.children = [...this.children];
-		newPath.children.push(new Anchor({
+		newPath.children.push(new BaseAnchor({
 			relPosition: {
 				x: relPosition.x - this.relPosition.x,
 				y: relPosition.y - this.relPosition.y,

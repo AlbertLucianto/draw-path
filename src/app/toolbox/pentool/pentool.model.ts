@@ -1,12 +1,6 @@
-import { ComponentRef } from '@angular/core';
 import { IToolBase, RegisteredListener } from '../tool/tool.model';
 import { PlaceAnchorAction } from './pentool.action';
-
-export class Drawable { // Here for now
-	pathFromRoot = (): Array<number> => {
-		return new Array();
-	}
-}
+import { Drawable } from '../../canvas/drawable/drawable.model';
 
 export class PenTool implements IToolBase {
 	listeners = new Array<RegisteredListener>();
@@ -17,8 +11,8 @@ export class PenTool implements IToolBase {
 		]);
 	}
 
-	mouseDown = (e: MouseEvent, triggeringComponent: ComponentRef<any>) => {
-		const path = (<Drawable>triggeringComponent.instance).pathFromRoot();
-		return new PlaceAnchorAction(path, { x: e.clientX, y: e.clientY });
+	mouseDown = (e: MouseEvent, triggeringDrawable: Drawable) => {
+		const pathFromRoot = triggeringDrawable.pathFromRoot();
+		return new PlaceAnchorAction(pathFromRoot, { x: e.clientX, y: e.clientY });
 	}
 }

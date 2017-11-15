@@ -1,10 +1,12 @@
 import { IPosition } from '../canvas.model';
+import { DrawableType } from './drawable.constant';
 
 export abstract class Drawable {
 	parent?: Drawable;
 	children?: Array<Drawable>;
 	idx: number;
 	relPosition: IPosition;
+	type: DrawableType;
 
 	constructor(init: {
 		relPosition: IPosition,

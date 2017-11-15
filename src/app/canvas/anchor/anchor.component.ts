@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { DrawableBaseComponent } from '../drawable/drawable.base.component';
+import { Drawable } from '../drawable/drawable.model';
 
 @Component({
 	selector: 'app-anchor',
@@ -6,9 +8,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 	styleUrls: ['./anchor.component.scss'],
 	encapsulation: ViewEncapsulation.None,
 })
-export class AnchorComponent implements OnInit {
-
-	constructor() { }
+export class AnchorComponent implements OnInit, DrawableBaseComponent {
+	drawable: Drawable;
 
 	ngOnInit() {
 	}

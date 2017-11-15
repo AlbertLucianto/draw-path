@@ -1,7 +1,7 @@
-import { ComponentRef } from '@angular/core';
 import { Action } from 'redux';
+import { Drawable } from '../../canvas/drawable/drawable.model';
 
-export type ActionFromEvent = (event: Event, triggeringComponent: ComponentRef<Object>) => Action;
+export type ActionFromEvent = (event: Event, triggeringDrawable: Drawable) => Action;
 
 export interface RegisteredListener {
 	name: string;

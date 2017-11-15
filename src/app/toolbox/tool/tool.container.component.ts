@@ -4,7 +4,6 @@ import {
 	ComponentFactoryResolver,
 	ComponentRef,
 	Input,
-	OnChanges,
 	OnDestroy,
 	ViewChild,
 	ViewContainerRef,
@@ -21,7 +20,7 @@ const mappings = {
 	[ToolName.SelectionTool]: SelectionToolComponent,
 };
 
-const getComponentType = (typeName: string) => {
+const getComponentType = (typeName: ToolName) => {
 	const type = mappings[typeName];
 	return type;
 };
@@ -31,13 +30,15 @@ const getComponentType = (typeName: string) => {
 	templateUrl: './tool.container.component.html',
 	styleUrls: ['./tool.container.component.scss'],
 })
-export class ToolContainerComponent implements AfterViewInit, OnDestroy, OnChanges {
+export class ToolContainerComponent implements AfterViewInit, OnDestroy {
 	componentRef: ComponentRef<Object>;
 	instance: ToolBaseComponent;
 	@ViewChild(ToolDirective, { read: ViewContainerRef }) toolHost: ViewContainerRef;
 	@Input() context: IToolContext;
-	@Input() type: string;
+	@Input() type: ToolName;
+
 	constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
+
 	ngAfterViewInit() {
 		if (this.type) {
 			const componentType = getComponentType(this.type);
@@ -47,11 +48,7 @@ export class ToolContainerComponent implements AfterViewInit, OnDestroy, OnChang
 			this.instance.context = this.context;
 		}
 	}
-	ngOnChanges() {
-		if (this.instance) {
-			this.instance.context = this.context;
-		}
-	}
+
 	ngOnDestroy() {
 		if (this.componentRef) {
 			this.componentRef.destroy();
