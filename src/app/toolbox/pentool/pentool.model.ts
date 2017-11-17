@@ -12,7 +12,7 @@ export class PenTool implements IToolBase {
 	}
 
 	mouseDown = (e: MouseEvent, triggeringDrawable: Drawable) => {
-		const pathFromRoot = triggeringDrawable.pathFromRoot();
+		const pathFromRoot = triggeringDrawable.routeParentPath.toJS();
 		return new PlaceAnchorAction(pathFromRoot, { x: e.clientX, y: e.clientY });
 	}
 }

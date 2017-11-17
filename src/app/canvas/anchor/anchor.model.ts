@@ -1,6 +1,5 @@
 import { DrawableType } from '../drawable/drawable.constant';
-import { Drawable } from '../drawable/drawable.model';
-import { Path } from '../path/path.model';
+import { Drawable, IinitDrawable } from '../drawable/drawable.model';
 
 export enum AnchorType {
 	MoveTo = 'M',
@@ -16,10 +15,13 @@ export enum AnchorType {
 }
 
 export class BaseAnchor extends Drawable {
-	type = DrawableType.Anchor;
-	parent: Path;
 	idx: number;
 	anchorType = this.idx === 0 ? AnchorType.MoveTo : AnchorType.LineTo;
+
+	constructor(params: IinitDrawable) {
+		super(params);
+		this.set('type', DrawableType.Anchor);
+	}
 
 	toTransform = (): string =>
 		`translate(${this.absPosition.x}px, ${this.absPosition.y}px)`

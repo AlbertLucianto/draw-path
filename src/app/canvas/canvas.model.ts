@@ -1,4 +1,4 @@
-import { Record } from 'immutable';
+import { List, Record } from 'immutable';
 import { DrawableWithChildren } from './drawable/drawable.model';
 
 export interface IPosition {
@@ -28,6 +28,6 @@ export class Quaternion extends Record({ x: 0, y: 0, z: 0 }) {
 	z: number;
 }
 
-export class CanvasState extends Record({ root: [] }) {
-	root: Array<DrawableWithChildren>;
+export class CanvasState extends Record({ root: List<DrawableWithChildren>([]) }) {
+	root: List<DrawableWithChildren>;
 }

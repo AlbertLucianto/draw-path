@@ -1,23 +1,31 @@
+import { List } from 'immutable';
 import { BaseAnchor } from '../anchor/anchor.model';
 import { Position } from '../canvas.model';
 import { DrawableType } from '../drawable/drawable.constant';
-import { DrawableWithChildren } from '../drawable/drawable.model';
+import { DrawableWithChildren, IinitDrawable } from '../drawable/drawable.model';
 
 export class Path extends DrawableWithChildren {
-	type = DrawableType.Path;
-	children: Array<BaseAnchor> = [];
+	children: List<BaseAnchor>;
+	idx: number;
+
+	constructor(params: IinitDrawable) {
+		super(params);
+		this.set('type', DrawableType.Path);
+	}
 
 	toString = (): string =>
 		this.children.reduce((acc, anchor) => `${acc} ${anchor.toString()}`, '')
 
 	/**
 	 * Push an anchor and return NEW Path (old path is not mutated)
-	 * @param { IPosition } absPosition - object containing x, y, and optional z
+	 * @param { Position } absPosition - object containing x, y, and optional z
 	 */
-	addAnchor = (absPosition: Position): Path => {
-		return <Path>this.set(
+	public addAnchor = (absPosition: Position): Path => {
+		const newPath = <Path>this.update(
 			'children',
-			this.get('children')
-					.push(new BaseAnchor(new BaseAnchor({ absPosition, parent: this, idx: this.children.length }))));
+			(children: List<BaseAnchor>): List<BaseAnchor> =>
+					children.push(new BaseAnchor({ absPosition, routeParentPath: this.routeParentPath, idx: this.children.size })),
+			);
+		return newPath;
 	}
 }

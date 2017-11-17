@@ -1,35 +1,49 @@
-import { Record } from 'immutable';
+import { List, Record } from 'immutable';
 import { Position } from '../canvas.model';
 import { DrawableType } from './drawable.constant';
 
-const ImmutableDrawable = Record({
-	parent: undefined,
+export interface IinitDrawable {
+	idx: number;
+	absPosition: Position;
+	routeParentPath?: List<number>;
+	type?: DrawableType;
+	children?: List<Drawable>;
+	[other: string]: any;
+}
+
+const initDrawableAttribute = {
+	routeParentPath: List<number>([]),
 	idx: 0,
 	absPosition: new Position({ x: 0, y: 0 }),
 	type: '',
-});
+};
 
-export abstract class Drawable extends ImmutableDrawable {
-	parent?: Drawable;
+export abstract class Drawable extends Record(initDrawableAttribute) {
+	routeParentPath: List<number>;
 	idx: number;
 	absPosition: Position;
 	type: DrawableType;
 
-	constructor(init: {
-		absPosition: Position,
-		parent?: Drawable,
-		idx: number,
-		[other: string]: any,
-	}) {
-		super(init);
-	}
-
-	pathFromRoot = (): Array<number> => {
-		if (!this.parent) { return []; }
-		return [...this.parent.pathFromRoot(), this.get('idx')];
+	constructor(init: IinitDrawable) {
+		super({
+			...init,
+			routeParentPath: init.routeParentPath ? init.routeParentPath.push(init.idx) : List([]),
+		});
 	}
 }
 
-export abstract class DrawableWithChildren extends Drawable {
-	children: Array<Drawable>;
+// Record is not able to add/remove an attribute once created
+export abstract class DrawableWithChildren extends Record({ ...initDrawableAttribute, children: List<Drawable>([]) }) {
+	children: List<Drawable>;
+	routeParentPath: List<number>;
+	idx: number;
+	absPosition: Position;
+	type: DrawableType;
+
+	constructor(init: IinitDrawable) {
+		super({
+			...init,
+			routeParentPath: init.routeParentPath ? init.routeParentPath.push(init.idx) : List([]),
+		});
+	}
 }
