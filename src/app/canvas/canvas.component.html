@@ -1,6 +1,3 @@
 <div class="draw-canvas">
-	<ng-template ngFor let-drawable [ngForOf]="root$ | async">
-		<!-- <app-drawable [drawable]="drawable"></app-drawable> -->
-		<app-path [drawable]="drawable"></app-path>
-	</ng-template>
+	<app-path [drawable]="drawable" *ngFor="let drawable of root$ | async"></app-path>
 </div>

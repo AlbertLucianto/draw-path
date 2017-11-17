@@ -1,8 +1,8 @@
 import { DrawableType } from '../drawable/drawable.constant';
-import { Drawable } from '../drawable/drawable.model';
+import { DrawableWithChildren } from '../drawable/drawable.model';
 import { Path } from '../path/path.model';
 
-export class Group extends Drawable {
+export class Group extends DrawableWithChildren {
 	type = DrawableType.Group;
 	children: Array<Group|Path> = [];
 

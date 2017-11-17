@@ -1,4 +1,5 @@
-import { Drawable } from './drawable/drawable.model';
+import { Record } from 'immutable';
+import { DrawableWithChildren } from './drawable/drawable.model';
 
 export interface IPosition {
 	x: number;
@@ -12,6 +13,21 @@ export interface IRotation {
 	z: number;
 }
 
-export interface ICanvasState {
-	root: Array<Drawable>;
+export class Position extends Record({ x: 0, y: 0 }) {
+	x: number;
+	y: number;
+}
+export class Position3D extends Record({ x: 0, y: 0, z: 0 }) {
+	x: number;
+	y: number;
+	z: number;
+}
+export class Quaternion extends Record({ x: 0, y: 0, z: 0 }) {
+	x: number;
+	y: number;
+	z: number;
+}
+
+export class CanvasState extends Record({ root: [] }) {
+	root: Array<DrawableWithChildren>;
 }

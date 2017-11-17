@@ -1,5 +1,6 @@
 import {
 	AfterViewInit,
+	ChangeDetectionStrategy,
 	Component,
 	ComponentFactoryResolver,
 	ComponentRef,
@@ -7,7 +8,7 @@ import {
 	OnDestroy,
 	ViewChild,
 	ViewContainerRef,
-	// ViewEncapsulation,
+	ViewEncapsulation,
 } from '@angular/core';
 
 import { AnchorComponent } from '../anchor/anchor.component';
@@ -33,6 +34,8 @@ const getComponentType = (typeName: DrawableType) => {
 	selector: 'app-drawable',
 	templateUrl: './drawable.component.html',
 	styleUrls: ['./drawable.component.scss'],
+	encapsulation: ViewEncapsulation.None,
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DrawableComponent implements AfterViewInit, OnDestroy {
 	componentRef: ComponentRef<DrawableBaseComponent>;
@@ -47,11 +50,7 @@ export class DrawableComponent implements AfterViewInit, OnDestroy {
 			const drawableType = getComponentType(this.drawable.type);
 			const factory = this.componentFactoryResolver.resolveComponentFactory<DrawableBaseComponent>(drawableType);
 			this.componentRef = this.drawableHost.createComponent(factory);
-			this.componentRef = this.drawableHost.createComponent(factory);
-			this.componentRef = this.drawableHost.createComponent(factory);
-			this.componentRef = this.drawableHost.createComponent(factory);
 			this.instance = this.componentRef.instance;
-			console.log(this.instance);
 			this.instance.drawable = this.drawable;
 		}
 	}

@@ -18,7 +18,11 @@ export enum AnchorType {
 export class BaseAnchor extends Drawable {
 	type = DrawableType.Anchor;
 	parent: Path;
+	idx: number;
 	anchorType = this.idx === 0 ? AnchorType.MoveTo : AnchorType.LineTo;
+
+	toTransform = (): string =>
+		`translate(${this.absPosition.x}px, ${this.absPosition.y}px)`
 
 	toString = (): string =>
 		`${this.anchorType} ${this.absPosition.x} ${this.absPosition.y}`
