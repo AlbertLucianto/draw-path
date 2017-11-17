@@ -31,7 +31,7 @@ const getComponentType = (typeName: ToolName) => {
 	styleUrls: ['./tool.container.component.scss'],
 })
 export class ToolContainerComponent implements AfterViewInit, OnDestroy {
-	componentRef: ComponentRef<Object>;
+	componentRef: ComponentRef<ToolBaseComponent>;
 	instance: ToolBaseComponent;
 	@ViewChild(ToolDirective, { read: ViewContainerRef }) toolHost: ViewContainerRef;
 	@Input() context: IToolContext;

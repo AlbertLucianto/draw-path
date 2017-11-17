@@ -1,5 +1,5 @@
 import { Drawable } from './drawable.model';
 
-export interface DrawableBaseComponent {
+export abstract class DrawableBaseComponent {
 	drawable: Drawable;
 }

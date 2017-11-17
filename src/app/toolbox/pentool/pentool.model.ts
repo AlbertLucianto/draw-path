@@ -1,6 +1,6 @@
+import { Drawable } from '../../canvas/drawable/drawable.model';
 import { IToolBase, RegisteredListener } from '../tool/tool.model';
 import { PlaceAnchorAction } from './pentool.action';
-import { Drawable } from '../../canvas/drawable/drawable.model';
 
 export class PenTool implements IToolBase {
 	listeners = new Array<RegisteredListener>();

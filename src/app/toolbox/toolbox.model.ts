@@ -6,6 +6,7 @@ export interface IToolboxState {
 
 export class ToolboxState implements IToolboxState {
 	selected: ToolName;
+
 	constructor(selected: ToolName) {
 		this.selected = selected;
 	}

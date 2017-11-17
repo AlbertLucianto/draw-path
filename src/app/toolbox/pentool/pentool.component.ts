@@ -12,6 +12,8 @@ import { SelectToolAction } from '../toolbox.action';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PenToolComponent extends ToolBaseComponent implements OnInit {
+
 	ngOnInit() { }
+
 	@dispatch() selectTool = () => new SelectToolAction(this.context.toolName).toObject();
 }

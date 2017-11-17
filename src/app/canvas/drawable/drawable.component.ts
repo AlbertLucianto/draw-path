@@ -7,10 +7,11 @@ import {
 	OnDestroy,
 	ViewChild,
 	ViewContainerRef,
-	ViewEncapsulation,
+	// ViewEncapsulation,
 } from '@angular/core';
 
 import { AnchorComponent } from '../anchor/anchor.component';
+import { GroupComponent } from '../group/group.component';
 import { PathComponent } from '../path/path.component';
 import { DrawableBaseComponent } from './drawable.base.component';
 import { DrawableType } from './drawable.constant';
@@ -18,8 +19,9 @@ import { DrawableDirective } from './drawable.directive';
 import { Drawable } from './drawable.model';
 
 const mappings = {
-	[DrawableType.Anchor]: AnchorComponent,
 	[DrawableType.Path]: PathComponent,
+	[DrawableType.Anchor]: AnchorComponent,
+	[DrawableType.Group]: GroupComponent,
 };
 
 const getComponentType = (typeName: DrawableType) => {
@@ -31,24 +33,26 @@ const getComponentType = (typeName: DrawableType) => {
 	selector: 'app-drawable',
 	templateUrl: './drawable.component.html',
 	styleUrls: ['./drawable.component.scss'],
-	encapsulation: ViewEncapsulation.None,
 })
 export class DrawableComponent implements AfterViewInit, OnDestroy {
 	componentRef: ComponentRef<DrawableBaseComponent>;
-	instance: Drawable;
+	instance: DrawableBaseComponent;
 	@ViewChild(DrawableDirective, { read: ViewContainerRef }) drawableHost: ViewContainerRef;
 	@Input() drawable: Drawable;
-	@Input() type: DrawableType;
 
 	constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
 
 	ngAfterViewInit() {
 		if (this.drawable.type) {
 			const drawableType = getComponentType(this.drawable.type);
-			const factory = this.componentFactoryResolver.resolveComponentFactory(drawableType);
+			const factory = this.componentFactoryResolver.resolveComponentFactory<DrawableBaseComponent>(drawableType);
 			this.componentRef = this.drawableHost.createComponent(factory);
-			const instance = this.componentRef.instance;
-			instance.drawable = this.drawable;
+			this.componentRef = this.drawableHost.createComponent(factory);
+			this.componentRef = this.drawableHost.createComponent(factory);
+			this.componentRef = this.drawableHost.createComponent(factory);
+			this.instance = this.componentRef.instance;
+			console.log(this.instance);
+			this.instance.drawable = this.drawable;
 		}
 	}
 

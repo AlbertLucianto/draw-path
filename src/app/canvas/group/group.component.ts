@@ -1,4 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ViewEncapsulation } from '@angular/core';
+import { DrawableBaseComponent } from '../drawable/drawable.base.component';
+import { Group } from '../group/group.model';
+import { Path } from '../path/path.model';
 
 @Component({
 	selector: 'app-group',
@@ -6,11 +9,10 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 	styleUrls: ['./group.component.scss'],
 	encapsulation: ViewEncapsulation.Emulated,
 })
-export class GroupComponent implements OnInit {
+export class GroupComponent extends DrawableBaseComponent implements AfterViewInit {
+	drawable: Group|Path;
 
-	constructor() { }
-
-	ngOnInit() {
+	ngAfterViewInit() {
 	}
 
 }

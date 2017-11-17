@@ -19,7 +19,12 @@ export class ToolboxComponent {
 	public toolList = [
 		ToolName.SelectionTool,
 		ToolName.PenTool,
+		ToolName.SelectionTool,
+		ToolName.PenTool,
+		ToolName.SelectionTool,
+		ToolName.PenTool,
 	];
 	@select() readonly selected$: Observable<ToolName>;
+
 	getSubPath = () => ['toolbox'];
 }

@@ -1,3 +1,8 @@
-<p>
-  path works!
-</p>
+<div class="path">
+  <svg class="line">
+    <svg:path [attr.d]="drawable.toString()"></svg:path>
+  </svg>
+  <div class="anchor-group">
+    <app-anchor *ngFor="let anchor of drawable.children" [drawable]="anchor"></app-anchor>
+  </div>
+</div>

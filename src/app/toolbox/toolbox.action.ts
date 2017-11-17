@@ -7,9 +7,11 @@ export abstract class CustomAction {
 		return acc;
 	}, {})
 }
+
 export class SelectToolAction extends CustomAction implements Action {
 	type = ToolboxActionType.SELECT_TOOL;
 	toolName: ToolName;
+
 	constructor(toolName: ToolName) {
 		super();
 		this.toolName = toolName;

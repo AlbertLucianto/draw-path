@@ -13,11 +13,11 @@ import { PathComponent } from './path/path.component';
 		CommonModule,
 	],
 	declarations: [
+		AnchorComponent,
 		PathComponent,
 		GroupComponent,
 		CanvasComponent,
 		DrawableComponent,
-		AnchorComponent,
 		DrawableDirective,
 	],
 	entryComponents: [

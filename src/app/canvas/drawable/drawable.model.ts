@@ -3,18 +3,17 @@ import { DrawableType } from './drawable.constant';
 
 export abstract class Drawable {
 	parent?: Drawable;
-	children?: Array<Drawable>;
 	idx: number;
-	relPosition: IPosition;
+	absPosition: IPosition;
 	type: DrawableType;
 
 	constructor(init: {
-		relPosition: IPosition,
+		absPosition: IPosition,
 		parent?: Drawable,
 		idx: number,
 		[other: string]: any,
 	}) {
-		this.relPosition = init.relativePosition;
+		this.absPosition = init.absPosition;
 		this.idx = init.idx;
 		this.parent = init.parent;
 	}
