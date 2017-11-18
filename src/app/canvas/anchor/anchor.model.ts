@@ -19,13 +19,15 @@ export class BaseAnchor extends Drawable {
 	anchorType = this.idx === 0 ? AnchorType.MoveTo : AnchorType.LineTo;
 
 	constructor(params: IinitDrawable) {
-		super(params);
-		this.set('type', DrawableType.Anchor);
+		super({
+			...params,
+			type: DrawableType.Anchor,
+		});
 	}
 
 	toTransform = (): string =>
 		`translate(${this.absPosition.x}px, ${this.absPosition.y}px)`
 
-	toString = (): string =>
+	toPath = (): string =>
 		`${this.anchorType} ${this.absPosition.x} ${this.absPosition.y}`
 }

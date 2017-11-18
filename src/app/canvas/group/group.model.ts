@@ -8,11 +8,24 @@ export class Group extends DrawableWithChildren {
 	type = DrawableType.Group;
 	children: List<Group|Path>;
 
+	/**
+	 * * Problem with immutable by adding methods which returns its own type
+	 * since Immutable (Record) return type is a <K,V> pairs and cannot hold method
+	 * defined in the subclasses
+	 *
+	 * Push an anchor and return NEW Path (old path is not mutated)
+	 * @param {{type: DrawableType, absPosition: Position }|Path|Group} drawable - drawable parameters
+	 * @param {number} idx - inserted on index
+	 */
 	addChild = (drawable:
 		{ type: DrawableType, absPosition: Position }|Path|Group, idx: number): Group => {
 		const child = <DrawableWithChildren>drawable;
 		if (typeof child !== 'undefined') {
-			return <Group>this.get('children').insert(idx, child.set('routeParentPath', this.routeParentPath.push(idx)));
+			return new Group({
+				children: this.children.push(child.set('routeParentPath', this.routeParentPath.push(idx))),
+				idx: idx,
+				absPosition: this.absPosition,
+			});
 		}
 		return <Group>this.update(
 			'children',

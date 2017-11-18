@@ -1,5 +1,6 @@
 import { select, WithSubStore } from '@angular-redux/store';
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { List } from 'immutable';
 import { Observable } from 'rxjs/Observable';
 import { canvasReducer } from './canvas.reducer';
 import { Drawable } from './drawable/drawable.model';
@@ -16,12 +17,12 @@ import { Drawable } from './drawable/drawable.model';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CanvasComponent implements OnInit {
-	@select('root')		readonly root$: Observable<Array<Drawable>>;
+	@select('root')		readonly root$: Observable<List<Drawable>>;
 
 	constructor() { }
 
 	ngOnInit() {
-		this.root$.subscribe(val => console.log(val));
+		this.root$.subscribe(val => console.log(val.toJS()));
 	}
 
 	getSubPath = () => ['canvas'];
