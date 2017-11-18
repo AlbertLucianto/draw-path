@@ -1,12 +1,12 @@
 import { Action } from 'redux';
 import { CustomAction } from '../toolbox.action';
 
-export enum PentoolActionType {
-	PLACE_ANCHOR = 'TOOLBOX.PENTOOL.PLACE_ANCHOR',
+export enum SelectiontoolActionType {
+	SELECT_DRAWABLE = 'TOOLBOX.SELECTIONTOOL.SELECT_DRAWABLE',
 }
 
-export class PlaceAnchorAction extends CustomAction implements Action {
-	type = PentoolActionType.PLACE_ANCHOR;
+export class SelectDrawableAction extends CustomAction implements Action {
+	type = SelectiontoolActionType.SELECT_DRAWABLE;
 	targetIn: Array<number>;
 	absPoint: { x: number, y: number };
 

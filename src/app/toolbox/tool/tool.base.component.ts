@@ -1,4 +1,4 @@
-import { ToolName } from '../toolbox.constant';
+import { ToolName } from '../toolbox.model';
 
 export interface IToolContext {
 	toolName: ToolName;

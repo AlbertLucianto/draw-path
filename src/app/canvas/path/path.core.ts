@@ -1,8 +1,6 @@
-// import { BaseAnchor } from '../anchor/anchor.model';
-// import { CanvasState } from '../canvas.model';
-// import { getDrawableIn } from '../drawable/drawable.core';
-// import { Path } from './path.model';
+import { CanvasState, Position } from '../canvas.model';
+import { Path } from './path.model';
 
-// export const addAnchor = (state: CanvasState, path: Path, anchor: BaseAnchor) => {
-// 	const pathParent = path.parent
-// }
+export const addAnchor = (state: CanvasState, path: Path, anchorPosition: Position) => {
+	return state.updateIn(path.routeParentPath.toJS(), (accessedPath: Path): Path => accessedPath.addAnchor(anchorPosition));
+};

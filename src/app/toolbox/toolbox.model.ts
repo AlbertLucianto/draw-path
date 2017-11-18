@@ -1,4 +1,7 @@
-import { ToolName } from './toolbox.constant';
+export enum ToolName {
+	PenTool = 'PENTOOL',
+	SelectionTool = 'SELECTIONTOOL',
+}
 
 export interface IToolboxState {
 	selected: ToolName;

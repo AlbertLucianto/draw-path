@@ -11,7 +11,7 @@ import {
 
 import { PenToolComponent } from '../pentool/pentool.component';
 import { SelectionToolComponent } from '../selectiontool/selectiontool.component';
-import { ToolName } from '../toolbox.constant';
+import { ToolName } from '../toolbox.model';
 import { IToolContext, ToolBaseComponent } from './tool.base.component';
 import { ToolDirective } from './tool.directive';
 

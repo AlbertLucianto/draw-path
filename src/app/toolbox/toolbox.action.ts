@@ -1,5 +1,10 @@
 import { Action } from 'redux';
-import { ToolboxActionType, ToolName } from './toolbox.constant';
+import { ToolName } from './toolbox.model';
+
+export enum ToolboxActionType {
+	SELECT_TOOL = 'TOOLBOX.GENERAL.SELECT_TOOL',
+	PLACE_ANCHOR = 'TOOLBOX.GENERAL.PLACE_ANCHOR',
+}
 
 export abstract class CustomAction {
 	toObject = (): Object => Object.keys(this).reduce((acc, key) => {
