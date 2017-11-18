@@ -1,12 +1,27 @@
 import { List } from 'immutable';
 import { Position } from '../canvas.model';
 import { DrawableType } from '../drawable/drawable.constant';
-import { DrawableWithChildren } from '../drawable/drawable.model';
+import { Drawable, IinitDrawable } from '../drawable/drawable.model';
 import { Path } from '../path/path.model';
 
-export class Group extends DrawableWithChildren {
-	type = DrawableType.Group;
+export class Group extends Drawable {
 	children: List<Group|Path>;
+
+	constructor(params: IinitDrawable) {
+		super({
+			...params,
+			type: DrawableType.Group,
+		});
+	}
+
+	setRouteParentPath = (path: List<number>): Group => {
+		return new Group({
+			children: <List<Group|Path>>this.children.map(child => child.setRouteParentPath(path.push(this.idx))),
+			idx: this.idx,
+			routeParentPath: path,
+			absPosition: this.absPosition,
+		});
+	}
 
 	/**
 	 * * Problem with immutable by adding methods which returns its own type
@@ -19,10 +34,10 @@ export class Group extends DrawableWithChildren {
 	 */
 	addChild = (drawable:
 		{ type: DrawableType, absPosition: Position }|Path|Group, idx: number): Group => {
-		const child = <DrawableWithChildren>drawable;
+		const child = <Path|Group>drawable;
 		if (typeof child !== 'undefined') {
 			return new Group({
-				children: this.children.push(child.set('routeParentPath', this.routeParentPath.push(idx))),
+				children: this.children.insert(idx, child.setRouteParentPath(this.routeParentPath.push(idx))),
 				idx: idx,
 				absPosition: this.absPosition,
 			});

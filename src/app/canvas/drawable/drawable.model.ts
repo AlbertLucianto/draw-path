@@ -18,24 +18,7 @@ const initDrawableAttribute = {
 	type: '',
 };
 
-export abstract class Drawable extends Record(initDrawableAttribute) {
-	routeParentPath: List<number>;
-	idx: number;
-	absPosition: Position;
-	type: DrawableType;
-
-	constructor(init: IinitDrawable) {
-		super({
-			...init,
-			routeParentPath: init.routeParentPath ? init.routeParentPath.push(init.idx) : List([init.idx]),
-		});
-	}
-
-	setRouteParentPath: (parentPath: List<number>) => Drawable;
-}
-
-// Created new because Record is not able to add/remove an attribute once created
-export class DrawableWithChildren extends Record({ ...initDrawableAttribute, children: List<Drawable>([]) }) {
+export abstract class Drawable extends Record({ ...initDrawableAttribute, children: List<Drawable>([]) }) {
 	children: List<Drawable>;
 	routeParentPath: List<number>;
 	idx: number;
@@ -45,9 +28,10 @@ export class DrawableWithChildren extends Record({ ...initDrawableAttribute, chi
 	constructor(init: IinitDrawable) {
 		super({
 			...init,
-			routeParentPath: init.routeParentPath ? init.routeParentPath.push(init.idx) : List([init.idx]),
+			routeParentPath: init.routeParentPath ? init.routeParentPath : List<number>([]),
+			children: init.children ? init.children : List<Drawable>([]),
 		});
 	}
 
-	setRouteParentPath: (parentPath: List<number>) => Drawable;
+	abstract setRouteParentPath: (parentPath: List<number>) => Drawable;
 }

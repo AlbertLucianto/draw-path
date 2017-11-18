@@ -1,3 +1,4 @@
+import { List } from 'immutable';
 import { DrawableType } from '../drawable/drawable.constant';
 import { Drawable, IinitDrawable } from '../drawable/drawable.model';
 
@@ -16,12 +17,21 @@ export enum AnchorType {
 
 export class BaseAnchor extends Drawable {
 	idx: number;
-	anchorType = this.idx === 0 ? AnchorType.MoveTo : AnchorType.LineTo;
+	anchorType: AnchorType;
 
 	constructor(params: IinitDrawable) {
 		super({
 			...params,
 			type: DrawableType.Anchor,
+		});
+		this.anchorType = this.idx === 0 ? AnchorType.MoveTo : AnchorType.LineTo;
+	}
+
+	setRouteParentPath = (path: List<number>): BaseAnchor => {
+		return new BaseAnchor({
+			idx: this.idx,
+			routeParentPath: path,
+			absPosition: this.absPosition,
 		});
 	}
 

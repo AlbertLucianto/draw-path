@@ -2,9 +2,9 @@ import { List } from 'immutable';
 import { BaseAnchor } from '../anchor/anchor.model';
 import { Position } from '../canvas.model';
 import { DrawableType } from '../drawable/drawable.constant';
-import { DrawableWithChildren, IinitDrawable } from '../drawable/drawable.model';
+import { Drawable, IinitDrawable } from '../drawable/drawable.model';
 
-export class Path extends DrawableWithChildren {
+export class Path extends Drawable {
 	children: List<BaseAnchor>;
 	idx: number;
 
@@ -12,6 +12,15 @@ export class Path extends DrawableWithChildren {
 		super({
 			...params,
 			type: DrawableType.Path,
+		});
+	}
+
+	setRouteParentPath = (path: List<number>): Path => {
+		return new Path({
+			children: <List<BaseAnchor>>this.children.map(child => child.setRouteParentPath(path.push(this.idx))),
+			idx: this.idx,
+			routeParentPath: path,
+			absPosition: this.absPosition,
 		});
 	}
 
@@ -31,7 +40,11 @@ export class Path extends DrawableWithChildren {
 	public addAnchor = (absPosition: Position): Path => {
 		return new Path({
 			idx: this.idx,
-			children: this.children.push(new BaseAnchor({ absPosition, routeParentPath: this.routeParentPath, idx: this.children.size })),
+			children: this.children.push(new BaseAnchor({
+				absPosition,
+				routeParentPath: this.routeParentPath.push(this.idx),
+				idx: this.children.size,
+			})),
 			absPosition: this.absPosition,
 		});
 	}
