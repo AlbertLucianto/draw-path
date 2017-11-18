@@ -11,7 +11,7 @@ import { ToolboxActions } from '../toolbox.action';
 	encapsulation: ViewEncapsulation.Emulated,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SelectionToolComponent extends ToolBaseComponent implements OnInit {
+export class SelectiontoolComponent extends ToolBaseComponent implements OnInit {
 	constructor(private toolboxActions: ToolboxActions) {
 		super();
 	}

@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { PenToolComponent } from './pentool/pentool.component';
+import { PentoolActions } from './pentool/pentool.action';
+import { PentoolComponent } from './pentool/pentool.component';
 import { PentoolEpics } from './pentool/pentool.epics';
-import { SelectionToolComponent } from './selectiontool/selectiontool.component';
+import { SelectiontoolActions } from './selectiontool/selectiontool.action';
+import { SelectiontoolComponent } from './selectiontool/selectiontool.component';
+import { SelectiontoolEpics } from './selectiontool/selectiontool.epics';
 import { ToolContainerComponent } from './tool/tool.container.component';
 import { ToolDirective } from './tool/tool.directive';
 import { ToolboxActions } from './toolbox.action';
@@ -16,18 +19,21 @@ import { ToolboxEpics } from './toolbox.epics';
 	declarations: [
 		ToolboxComponent,
 		ToolContainerComponent,
-		PenToolComponent,
-		SelectionToolComponent,
+		PentoolComponent,
+		SelectiontoolComponent,
 		ToolDirective,
 	],
 	entryComponents: [
-		PenToolComponent,
-		SelectionToolComponent,
+		PentoolComponent,
+		SelectiontoolComponent,
 	],
 	providers: [
-		ToolboxEpics,
-		PentoolEpics,
 		ToolboxActions,
+		ToolboxEpics,
+		PentoolActions,
+		PentoolEpics,
+		SelectiontoolEpics,
+		SelectiontoolActions,
 	],
 	exports: [
 		ToolboxComponent,

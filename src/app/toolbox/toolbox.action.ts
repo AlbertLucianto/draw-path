@@ -16,6 +16,11 @@ export type ISetToolTraitAction = FluxStandardAction<{
 	tool: ToolBase,
 }, undefined>;
 
+export type IToolboxGeneralAction = FluxStandardAction<{ // Need to improve to be more elegant!
+	toolName?: ToolName,
+	tool?: ToolBase,
+}, undefined>;
+
 @Injectable()
 export class ToolboxActions {
 	selectToolAction = (toolName: ToolName): ISelectToolAction => ({

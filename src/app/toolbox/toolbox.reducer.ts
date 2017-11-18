@@ -21,7 +21,7 @@ export const toolboxReducer: Reducer<ToolboxState> = (
 		case ToolboxActionType.SELECT_TOOL:
 			return state; // Let be handled by each tool epic, will dispatch below action
 		case ToolboxActionType.SET_TOOL_TRAIT:
-			return <ToolboxState>state.set('selected', (<ISetToolTraitAction>action).payload.tool);
+			return new ToolboxState({ selected: (<ISetToolTraitAction>action).payload.tool }); // Need some way to utilise Immutablility!
 	}
 	return state;
 };

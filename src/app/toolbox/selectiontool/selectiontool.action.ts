@@ -10,7 +10,7 @@ export type ISelectDrawableAction = FluxStandardAction<{
 }, undefined>;
 
 @Injectable()
-export class SelectionToolActions {
+export class SelectiontoolActions {
 	selectDrawableAction = (drawable: Object): ISelectDrawableAction => ({
 		type: SelectiontoolActionType.SELECT_DRAWABLE,
 		payload: { drawable },

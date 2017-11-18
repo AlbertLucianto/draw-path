@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PenToolComponent } from './pentool.component';
+import { PentoolComponent } from './pentool.component';
 
-describe('PenToolComponent', () => {
-	let component: PenToolComponent;
-	let fixture: ComponentFixture<PenToolComponent>;
+describe('PentoolComponent', () => {
+	let component: PentoolComponent;
+	let fixture: ComponentFixture<PentoolComponent>;
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [ PenToolComponent ],
+			declarations: [ PentoolComponent ],
 		})
 		.compileComponents();
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(PenToolComponent);
+		fixture = TestBed.createComponent(PentoolComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});
