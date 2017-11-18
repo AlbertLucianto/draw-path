@@ -1,18 +1,20 @@
-import { Action } from 'redux';
-import { CustomAction } from '../toolbox.action';
+import { Injectable } from '@angular/core';
+import { FluxStandardAction } from 'flux-standard-action';
 
 export enum PentoolActionType {
 	PLACE_ANCHOR = 'TOOLBOX.PENTOOL.PLACE_ANCHOR',
 }
 
-export class PlaceAnchorAction extends CustomAction implements Action {
-	type = PentoolActionType.PLACE_ANCHOR;
-	targetIn: Array<number>;
-	absPoint: { x: number, y: number };
+export type IPlaceAnchorAction = FluxStandardAction<{
+	targetIn: Array<number>,
+	absPoint: { x: number, y: number },
+}, undefined>;
 
-	constructor(targetIn: Array<number>, absPoint: { x: number, y: number }) {
-		super();
-		this.targetIn = targetIn;
-		this.absPoint = absPoint;
-	}
+@Injectable()
+export class PentoolActions {
+	placeAnchorAction = (targetIn: Array<number>, absPoint: { x: number, y: number }): IPlaceAnchorAction => ({
+		type: PentoolActionType.PLACE_ANCHOR,
+		payload: { targetIn, absPoint },
+		meta: undefined,
+	})
 }

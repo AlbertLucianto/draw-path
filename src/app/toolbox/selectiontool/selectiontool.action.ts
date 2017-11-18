@@ -1,19 +1,19 @@
-import { Action } from 'redux';
-import { CustomAction } from '../toolbox.action';
+import { Injectable } from '@angular/core';
+import { FluxStandardAction } from 'flux-standard-action';
 
 export enum SelectiontoolActionType {
 	SELECT_DRAWABLE = 'TOOLBOX.SELECTIONTOOL.SELECT_DRAWABLE',
 }
 
-// Dummy
-export class SelectDrawableAction extends CustomAction implements Action {
-	type = SelectiontoolActionType.SELECT_DRAWABLE;
-	targetIn: Array<number>;
-	absPoint: { x: number, y: number };
+export type ISelectDrawableAction = FluxStandardAction<{
+	drawable: Object,
+}, undefined>;
 
-	constructor(targetIn: Array<number>, absPoint: { x: number, y: number }) {
-		super();
-		this.targetIn = targetIn;
-		this.absPoint = absPoint;
-	}
+@Injectable()
+export class SelectionToolActions {
+	selectDrawableAction = (drawable: Object): ISelectDrawableAction => ({
+		type: SelectiontoolActionType.SELECT_DRAWABLE,
+		payload: { drawable },
+		meta: undefined,
+	})
 }

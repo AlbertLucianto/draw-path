@@ -42,7 +42,7 @@ export class ToolContainerComponent implements AfterViewInit, OnDestroy {
 	ngAfterViewInit() {
 		if (this.type) {
 			const componentType = getComponentType(this.type);
-			const factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
+			const factory = this.componentFactoryResolver.resolveComponentFactory<ToolBaseComponent>(componentType);
 			this.componentRef = this.toolHost.createComponent(factory);
 			this.instance = <ToolBaseComponent>this.componentRef.instance;
 			this.instance.context = this.context;

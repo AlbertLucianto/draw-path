@@ -1,4 +1,5 @@
-import { Action } from 'redux';
+import { Injectable } from '@angular/core';
+import { FluxStandardAction } from 'flux-standard-action';
 import { ToolBase } from './tool/tool.model';
 import { ToolName } from './toolbox.model';
 
@@ -7,29 +8,25 @@ export enum ToolboxActionType {
 	SET_TOOL_TRAIT = 'TOOLBOX.GENERAL.SET_TOOL_TRAIT',
 }
 
-export abstract class CustomAction {
-	toObject = (): Object => Object.keys(this).reduce((acc, key) => {
-		acc[key] = this[key];
-		return acc;
-	}, {})
-}
+export type ISelectToolAction = FluxStandardAction<{
+	toolName: ToolName,
+}, undefined>;
 
-export class SelectToolAction extends CustomAction implements Action {
-	type = ToolboxActionType.SELECT_TOOL;
-	toolName: ToolName;
+export type ISetToolTraitAction = FluxStandardAction<{
+	tool: ToolBase,
+}, undefined>;
 
-	constructor(toolName: ToolName) {
-		super();
-		this.toolName = toolName;
-	}
-}
+@Injectable()
+export class ToolboxActions {
+	selectToolAction = (toolName: ToolName): ISelectToolAction => ({
+		type: ToolboxActionType.SELECT_TOOL,
+		payload: { toolName },
+		meta: undefined,
+	})
 
-export class SetToolTraitAction extends CustomAction implements Action {
-	type = ToolboxActionType.SET_TOOL_TRAIT;
-	tool: ToolBase;
-
-	constructor(tool: ToolBase) {
-		super();
-		this.tool = tool;
-	}
+	setToolTraitAction = (tool: ToolBase): ISetToolTraitAction => ({
+		type: ToolboxActionType.SET_TOOL_TRAIT,
+		payload: { tool },
+		meta: undefined,
+	})
 }
