@@ -1,13 +1,16 @@
 import { Action, Reducer } from 'redux';
 import { PentoolActionType } from './pentool/pentool.action';
+import { Pentool } from './pentool/pentool.model';
 import { pentoolReducer } from './pentool/pentool.reducer';
 import { SelectiontoolActionType } from './selectiontool/selectiontool.action';
 import { selectiontoolReducer } from './selectiontool/selectiontool.reducer';
-import { SelectToolAction } from './toolbox.action';
-import { ToolboxActionType } from './toolbox.action';
-import { IToolboxState, ToolboxState, ToolName } from './toolbox.model';
+import { SetToolTraitAction, ToolboxActionType } from './toolbox.action';
+import { ToolboxState } from './toolbox.model';
 
-export const toolboxReducer: Reducer<IToolboxState> = (state: IToolboxState = new ToolboxState(ToolName.SelectionTool), action: Action) => {
+export const toolboxReducer: Reducer<ToolboxState> = (
+	state: ToolboxState = new ToolboxState({ selected: Pentool }),
+	action: Action,
+) => {
 	switch (true) {
 		case action.type in PentoolActionType:
 			return pentoolReducer(state, action);
@@ -16,7 +19,9 @@ export const toolboxReducer: Reducer<IToolboxState> = (state: IToolboxState = ne
 	}
 	switch (action.type) {
 		case ToolboxActionType.SELECT_TOOL:
-			return new ToolboxState((<SelectToolAction>action).toolName);
+			break; // Let be handled by each tool epic, will dispatch below action
+		case ToolboxActionType.SET_TOOL_TRAIT:
+			return <ToolboxState>state.set('selected', (<SetToolTraitAction>action).tool);
 	}
 	return state;
 };

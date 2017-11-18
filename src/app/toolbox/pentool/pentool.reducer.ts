@@ -1,6 +1,6 @@
 import { Action, Reducer } from 'redux';
-import { IToolboxState } from '../toolbox.model';
+import { ToolboxState } from '../toolbox.model';
 
-export const pentoolReducer: Reducer<IToolboxState> = (state: IToolboxState, action: Action) => {
+export const pentoolReducer: Reducer<ToolboxState> = (state: ToolboxState, action: Action) => {
 	return state;
 };

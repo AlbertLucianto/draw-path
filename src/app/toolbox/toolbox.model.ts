@@ -1,16 +1,17 @@
+import { Record } from 'immutable';
+import { IToolBase, ToolBase } from './tool/tool.model';
+
 export enum ToolName {
 	PenTool = 'PENTOOL',
 	SelectionTool = 'SELECTIONTOOL',
 }
 
-export interface IToolboxState {
-	selected: ToolName;
-}
+export class ToolboxState extends Record({ selected: {} }) {
+	selected: ToolBase;
 
-export class ToolboxState implements IToolboxState {
-	selected: ToolName;
-
-	constructor(selected: ToolName) {
-		this.selected = selected;
+	constructor(initState: {
+		selected: IToolBase,
+	}) {
+		super(initState);
 	}
 }

@@ -1,9 +1,10 @@
 import { Action } from 'redux';
+import { ToolBase } from './tool/tool.model';
 import { ToolName } from './toolbox.model';
 
 export enum ToolboxActionType {
 	SELECT_TOOL = 'TOOLBOX.GENERAL.SELECT_TOOL',
-	PLACE_ANCHOR = 'TOOLBOX.GENERAL.PLACE_ANCHOR',
+	SET_TOOL_TRAIT = 'TOOLBOX.GENERAL.SET_TOOL_TRAIT',
 }
 
 export abstract class CustomAction {
@@ -20,5 +21,15 @@ export class SelectToolAction extends CustomAction implements Action {
 	constructor(toolName: ToolName) {
 		super();
 		this.toolName = toolName;
+	}
+}
+
+export class SetToolTraitAction extends CustomAction implements Action {
+	type = ToolboxActionType.SET_TOOL_TRAIT;
+	tool: ToolBase;
+
+	constructor(tool: ToolBase) {
+		super();
+		this.tool = tool;
 	}
 }

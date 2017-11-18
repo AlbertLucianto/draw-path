@@ -5,6 +5,7 @@ export enum SelectiontoolActionType {
 	SELECT_DRAWABLE = 'TOOLBOX.SELECTIONTOOL.SELECT_DRAWABLE',
 }
 
+// Dummy
 export class SelectDrawableAction extends CustomAction implements Action {
 	type = SelectiontoolActionType.SELECT_DRAWABLE;
 	targetIn: Array<number>;
