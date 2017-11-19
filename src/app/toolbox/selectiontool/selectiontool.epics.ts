@@ -18,7 +18,7 @@ export class SelectiontoolEpics {
 
 	private setSelectiontoolTraitOnSelected = (): Epic<IToolboxGeneralAction, IAppState> => {
 		return (action$, store) => action$
-			.ofType(ToolboxActionType.SELECT_TOOL)
+			.ofType(ToolboxActionType.TOOLBOX_SELECT_TOOL)
 			.filter(action => action.payload.toolName === ToolName.SelectionTool)
 			.map(action => this.toolboxActions.setToolTraitAction(createSelectiontool()));
 	}

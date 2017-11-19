@@ -19,10 +19,8 @@ export const canvasReducer: Reducer<CanvasState> = (
 		]),
 	}),
 	action: Action) => {
-		console.log(action, action.type in PathActionType);
 		switch (true) {
-			case true:
-				console.log(action);
+			case action.type in PathActionType:
 				return pathReducer(state, action);
 		}
 		return state;

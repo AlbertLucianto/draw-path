@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 import { FluxStandardAction } from 'flux-standard-action';
 
+/**
+ * Using CONSTANT naming convention and holding same value
+ * to be able to check if an enum value is in enum keys
+ */
 export enum PentoolActionType {
-	PLACE_ANCHOR = 'TOOLBOX.PENTOOL.PLACE_ANCHOR',
+	PENTOOL_PLACE_ANCHOR = 'PENTOOL_PLACE_ANCHOR',
 }
 
 export interface IPlaceAnchorPayload { targetIn: Array<number>; absPoint: { x: number, y: number }; }
@@ -12,7 +16,7 @@ export type IPlaceAnchorAction = FluxStandardAction<IPlaceAnchorPayload, undefin
 @Injectable()
 export class PentoolActions {
 	placeAnchorAction = (targetIn: Array<number>, absPoint: { x: number, y: number }): IPlaceAnchorAction => ({
-		type: PentoolActionType.PLACE_ANCHOR,
+		type: PentoolActionType.PENTOOL_PLACE_ANCHOR,
 		payload: { targetIn, absPoint },
 		meta: undefined,
 	})

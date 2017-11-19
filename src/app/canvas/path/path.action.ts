@@ -3,8 +3,12 @@ import { FluxStandardAction } from 'flux-standard-action';
 import { Position } from '../canvas.model';
 // import { Path } from './path.model';
 
+/**
+ * Using CONSTANT naming convention and holding same value
+ * to be able to check if an enum value is in enum keys
+ */
 export enum PathActionType {
-	AddAnchor = 'CANVAS.PATH.ADD_ANCHOR',
+	PATH_ADD_ANCHOR = 'PATH_ADD_ANCHOR',
 }
 
 export type IAddAnchorAction = FluxStandardAction<{
@@ -15,7 +19,7 @@ export type IAddAnchorAction = FluxStandardAction<{
 @Injectable()
 export class PathActions {
 	addAnchorAction = (targetIn: Array<number>, anchorPosition: Position): IAddAnchorAction => ({
-		type: PathActionType.AddAnchor,
+		type: PathActionType.PATH_ADD_ANCHOR,
 		payload: { targetIn, anchorPosition },
 		meta: undefined,
 	})

@@ -7,7 +7,7 @@ import * as pathCore from './path.core';
 
 export const pathReducer: Reducer<CanvasState> = (state: CanvasState, action: Action) => {
 	switch (action.type) {
-		case PathActionType.AddAnchor:
+		case PathActionType.PATH_ADD_ANCHOR:
 			const castAction = <IAddAnchorAction>action;
 			return <CanvasState>pathCore.addAnchor(state, castAction.payload.targetIn, castAction.payload.anchorPosition);
 	}

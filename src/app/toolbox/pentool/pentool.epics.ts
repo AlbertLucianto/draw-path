@@ -24,17 +24,14 @@ export class PentoolEpics {
 
 	private setPentoolTraitOnSelected = (): Epic<IToolboxGeneralAction, IAppState> => {
 		return (action$, store) => action$
-			.ofType(ToolboxActionType.SELECT_TOOL)
+			.ofType(ToolboxActionType.TOOLBOX_SELECT_TOOL)
 			.filter(action => action.payload.toolName === ToolName.PenTool)
 			.map(action => this.toolboxActions.setToolTraitAction(createPentool()));
 	}
 
 	private placeAnchorOnceInformed = (): Epic<AnyAction, IAppState> => {
 		return (action$, store) => action$
-			.ofType(PentoolActionType.PLACE_ANCHOR)
-			.map(action => {
-				console.log(action);
-				return this.pathActions.addAnchorAction(action.payload.targetIn, action.payload.absPoint);
-			});
+			.ofType(PentoolActionType.PENTOOL_PLACE_ANCHOR)
+			.map(action => this.pathActions.addAnchorAction(action.payload.targetIn, action.payload.absPoint));
 	}
 }
