@@ -1,6 +1,5 @@
 import { List } from 'immutable';
-import { DrawableType } from '../drawable/drawable.constant';
-import { Drawable, IinitDrawable } from '../drawable/drawable.model';
+import { Drawable, DrawableType, IinitDrawable } from '../drawable/drawable.model';
 
 export enum AnchorType {
 	MoveTo = 'M',

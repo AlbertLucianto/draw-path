@@ -5,10 +5,9 @@ export enum PentoolActionType {
 	PLACE_ANCHOR = 'TOOLBOX.PENTOOL.PLACE_ANCHOR',
 }
 
-export type IPlaceAnchorAction = FluxStandardAction<{
-	targetIn: Array<number>,
-	absPoint: { x: number, y: number },
-}, undefined>;
+export interface IPlaceAnchorPayload { targetIn: Array<number>; absPoint: { x: number, y: number }; }
+
+export type IPlaceAnchorAction = FluxStandardAction<IPlaceAnchorPayload, undefined>;
 
 @Injectable()
 export class PentoolActions {

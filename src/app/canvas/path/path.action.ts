@@ -1,10 +1,22 @@
-import { CanvasActionType } from '../canvas.constant';
+import { Injectable } from '@angular/core';
+import { FluxStandardAction } from 'flux-standard-action';
+import { Position } from '../canvas.model';
+// import { Path } from './path.model';
 
-declare module '../canvas.constant' {
-	export enum CanvasActionType { // tslint:disable-line
-		HelloWorld = 'Hello',
-	}
+export enum PathActionType {
+	AddAnchor = 'CANVAS.PATH.ADD_ANCHOR',
 }
 
-const CanvasActionTypeValue = CanvasActionType as any;
-CanvasActionTypeValue['HelloWorld'] = 'Hello';
+export type IAddAnchorAction = FluxStandardAction<{
+	targetIn: Array<number>,
+	anchorPosition: Position,
+}, undefined>;
+
+@Injectable()
+export class PathActions {
+	addAnchorAction = (targetIn: Array<number>, anchorPosition: Position): IAddAnchorAction => ({
+		type: PathActionType.AddAnchor,
+		payload: { targetIn, anchorPosition },
+		meta: undefined,
+	})
+}

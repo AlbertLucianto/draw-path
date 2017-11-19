@@ -1,6 +1,11 @@
 import { List, Record } from 'immutable';
 import { Position } from '../canvas.model';
-import { DrawableType } from './drawable.constant';
+
+export enum DrawableType {
+	Anchor = 'DRAWABLE_ANCHOR',
+	Path = 'DRAWABLE_PATH',
+	Group = 'DRAWABLE_GROUP',
+}
 
 export interface IinitDrawable {
 	idx: number;

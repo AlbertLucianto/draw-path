@@ -1,9 +1,11 @@
 import { List } from 'immutable';
 import { Action, Reducer } from 'redux';
-import { CanvasActionType } from './canvas.constant';
+// import { CanvasActionType } from './canvas.constant';
 import { CanvasState, Position } from './canvas.model';
+import { PathActionType } from './path/path.action';
 // import { Group } from './group/group.model';
 import { Path } from './path/path.model';
+import { pathReducer } from './path/path.reducer';
 
 export const canvasReducer: Reducer<CanvasState> = (
 	state = new CanvasState({
@@ -17,8 +19,11 @@ export const canvasReducer: Reducer<CanvasState> = (
 		]),
 	}),
 	action: Action) => {
-		switch (action.type) {
-			case CanvasActionType.AddAnchor:
+		console.log(action, action.type in PathActionType);
+		switch (true) {
+			case true:
+				console.log(action);
+				return pathReducer(state, action);
 		}
 		return state;
 };

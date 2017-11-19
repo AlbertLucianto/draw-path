@@ -15,9 +15,8 @@ import { AnchorComponent } from '../anchor/anchor.component';
 import { GroupComponent } from '../group/group.component';
 import { PathComponent } from '../path/path.component';
 import { DrawableBaseComponent } from './drawable.base.component';
-import { DrawableType } from './drawable.constant';
 import { DrawableDirective } from './drawable.directive';
-import { Drawable } from './drawable.model';
+import { Drawable, DrawableType } from './drawable.model';
 
 const mappings = {
 	[DrawableType.Path]: PathComponent,

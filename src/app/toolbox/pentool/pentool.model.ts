@@ -7,7 +7,7 @@ import { PentoolActions } from './pentool.action';
 export const createPentool = (): ToolBase => {
 	const actions = new PentoolActions();
 	const mouseDown = (e: MouseEvent, triggeringDrawable: Drawable) => {
-		const pathFromRoot = triggeringDrawable.routeParentPath.toJS();
+		const pathFromRoot = [ ...triggeringDrawable.routeParentPath.toJS(), triggeringDrawable.idx ];
 		return actions.placeAnchorAction(pathFromRoot, { x: e.clientX, y: e.clientY });
 	};
 	return new ToolBase({

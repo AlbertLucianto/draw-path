@@ -1,7 +1,6 @@
 import { List } from 'immutable';
 import { Position } from '../canvas.model';
-import { DrawableType } from '../drawable/drawable.constant';
-import { Drawable, IinitDrawable } from '../drawable/drawable.model';
+import { Drawable, DrawableType, IinitDrawable } from '../drawable/drawable.model';
 import { Path } from '../path/path.model';
 
 export class Group extends Drawable {
