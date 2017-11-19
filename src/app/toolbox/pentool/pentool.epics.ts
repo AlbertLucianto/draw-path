@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AnyAction } from 'redux';
 import { createEpicMiddleware, Epic } from 'redux-observable';
+
+import { FluxStandardAction } from 'flux-standard-action';
 
 import { PathActions } from '../../canvas/path/path.action';
 import { IAppState } from '../../store/model';
@@ -29,9 +30,12 @@ export class PentoolEpics {
 			.map(action => this.toolboxActions.setToolTraitAction(createPentool()));
 	}
 
-	private placeAnchorOnceInformed = (): Epic<AnyAction, IAppState> => {
+	private placeAnchorOnceInformed = (): Epic<FluxStandardAction<any, undefined>, IAppState> => {
 		return (action$, store) => action$
 			.ofType(PentoolActionType.PENTOOL_PLACE_ANCHOR)
-			.map(action => this.pathActions.addAnchorAction(action.payload.targetIn, action.payload.absPoint));
+			.map(action => {
+				// let { absPoint } = action.payload;
+				return this.pathActions.addAnchorAction(action.payload.targetIn, action.payload.absPoint);
+			});
 	}
 }

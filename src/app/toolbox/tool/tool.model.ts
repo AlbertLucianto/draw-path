@@ -1,15 +1,7 @@
 import { List, Record } from 'immutable';
-import { Action } from 'redux';
-import { Drawable } from '../../canvas/drawable/drawable.model';
+
+import { RegisteredListener } from '../../canvas/canvas.model';
 import { ToolName } from '../toolbox.model';
-
-export type ActionFromEvent = (event: Event, triggeringDrawable: Drawable) => Action;
-
-export interface RegisteredListener {
-	name: string;
-	handler: ActionFromEvent;
-	target: 'anchor'|'path'|'curveHandle'|'group'|'canvas'|string;
-}
 
 export interface IToolBase {
 	name: ToolName;

@@ -1,6 +1,7 @@
 import { List } from 'immutable';
+import { RegisteredListener } from '../../canvas/canvas.model';
 import { Drawable } from '../../canvas/drawable/drawable.model';
-import { RegisteredListener, ToolBase } from '../tool/tool.model';
+import { ToolBase } from '../tool/tool.model';
 import { ToolName } from '../toolbox.model';
 import { PentoolActions } from './pentool.action';
 

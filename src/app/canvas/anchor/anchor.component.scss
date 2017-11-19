@@ -4,6 +4,11 @@
 	left: -5px;
 	width: 5px;
 	height: 5px;
-	border: 2px solid rgb(255, 0, 68);
+	border: 2px solid rgba(255, 0, 68, 0);
+	transition: border .15s ease;
 	border-radius: 2px;
+	&:hover {
+		border: 2px solid rgb(255, 0, 68);
+		transition: border .05s ease;
+	}
 }

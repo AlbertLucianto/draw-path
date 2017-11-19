@@ -1,4 +1,5 @@
 import { List, Record } from 'immutable';
+import { Action } from 'redux';
 import { Drawable } from './drawable/drawable.model';
 
 export interface IPosition {
@@ -45,6 +46,22 @@ export class Quaternion extends Record({ x: 0, y: 0, z: 0 }) {
 	}
 }
 
+// export interface IBoard {
+// 	topLeft:
+// 	scale:
+// 	translate:
+// 	size:
+// }
+
+export type ActionFromEvent = (event: Event, triggeringDrawable: Drawable) => Action;
+
+export interface RegisteredListener {
+	name: string;
+	handler: ActionFromEvent;
+	target: 'anchor'|'path'|'curveHandle'|'group'|'canvas'|string;
+}
+
 export class CanvasState extends Record({ root: List<Drawable>([]) }) {
 	root: List<Drawable>;
+	// board: Map<>;
 }

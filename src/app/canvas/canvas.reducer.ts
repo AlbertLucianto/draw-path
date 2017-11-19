@@ -1,6 +1,5 @@
 import { List } from 'immutable';
 import { Action, Reducer } from 'redux';
-// import { CanvasActionType } from './canvas.constant';
 import { CanvasState, Position } from './canvas.model';
 import { PathActionType } from './path/path.action';
 // import { Group } from './group/group.model';

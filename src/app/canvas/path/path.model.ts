@@ -36,7 +36,7 @@ export class Path extends Drawable {
 	 */
 	public addAnchor = (absPosition: Position|IPosition): Path => {
 		let position = absPosition;
-		if (absPosition instanceof Position) {
+		if (!(absPosition instanceof Position)) {
 			position = new Position(absPosition);
 		}
 		return new Path({
