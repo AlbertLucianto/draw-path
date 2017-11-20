@@ -46,12 +46,19 @@ export class Quaternion extends Record({ x: 0, y: 0, z: 0 }) {
 	}
 }
 
-// export interface IBoard {
-// 	topLeft:
-// 	scale:
-// 	translate:
-// 	size:
-// }
+export interface ISize {
+	width: number;
+	height: number;
+}
+
+export class Size extends Record({ width: 0, height: 0 }) {
+	width: number;
+	height: number;
+
+	constructor(size: ISize) {
+		super(size);
+	}
+}
 
 export type ActionFromEvent = (event: Event, triggeringDrawable: Drawable) => Action;
 
@@ -61,7 +68,39 @@ export interface RegisteredListener {
 	target: 'anchor'|'path'|'curveHandle'|'group'|'canvas'|string;
 }
 
-export class CanvasState extends Record({ root: List<Drawable>([]) }) {
+export interface IBoard {
+	topLeft: Position;
+	scale: number;
+	moved: Position;
+	dimension: Size;
+}
+
+/**
+ * IMPORTANT NOTE!
+ *
+ * DO NOT use 'size' because it is a reserved keyword in immutable (Record)
+ * thus changing it to 'dimension'
+ */
+const initBoardAttributes: IBoard = {
+	topLeft: new Position({ x: 0, y: 0 }),
+	scale: 1,
+	moved: new Position({ x: 0, y: 0 }),
+	dimension: new Size({ width: 800, height: 600 }),
+};
+
+export class Board extends Record(initBoardAttributes) {
+	constructor(initBoard: IBoard = initBoardAttributes) {
+		super(initBoard);
+	}
+}
+
+export interface ICanvasState {
 	root: List<Drawable>;
-	// board: Map<>;
+	board: Board;
+}
+
+export class CanvasState extends Record({ root: List<Drawable>([]), board: new Board(initBoardAttributes) }) {
+	constructor(initCanvas: ICanvasState) {
+		super(initCanvas);
+	}
 }

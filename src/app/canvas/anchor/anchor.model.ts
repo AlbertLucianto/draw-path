@@ -35,8 +35,8 @@ export class BaseAnchor extends Drawable {
 	}
 
 	toTransform = (): string =>
-		`translate(${this.absPosition.x}px, ${this.absPosition.y}px)`
+		`translate(${this.absPosition.get('x')}px, ${this.absPosition.get('y')}px)`
 
 	toPath = (): string =>
-		`${this.anchorType} ${this.absPosition.x} ${this.absPosition.y}`
+		`${this.anchorType} ${this.absPosition.get('x')} ${this.absPosition.get('y')}`
 }
