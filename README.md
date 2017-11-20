@@ -1,27 +1,27 @@
-# DrawPath
+# Draw Path
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
+> Draw Path is a submodule of project [3D SVG Editor](https://github.com/AlbertLucianto/3D-SVG-Editor)
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. Ensure `npm` is install on your system
+2. Install Angular CLI by running `npm install -g @angular/cli`
+3. Set this root repository as current working directory
+4. Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
-## Running unit tests
+## Main Dependencies
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. [Angular 5](https://angular.io/)
+2. [Redux](https://redux.js.org/)
+3. [RxJS](http://reactivex.io/rxjs/)
+4. [Angular Redux](https://github.com/angular-redux/store)
+5. [Redux Observable (middleware)](https://redux-observable.js.org/)
+6. [ImmutableJS](https://facebook.github.io/immutable-js/)
 
-## Running end-to-end tests
+## Architecture in Brief
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+![alt text](https://albertlucianto.github.io/draw-path/draw-path-architecture.png)
