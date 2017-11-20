@@ -34,8 +34,12 @@ export class PentoolEpics {
 		return (action$, store) => action$
 			.ofType(PentoolActionType.PENTOOL_PLACE_ANCHOR)
 			.map(action => {
-				// let { absPoint } = action.payload;
-				return this.pathActions.addAnchorAction(action.payload.targetIn, action.payload.absPoint);
+				const { x, y } = store.getState().canvas.getIn(['board', 'topLeft']).toJS();
+				const position = {
+					x: action.payload.absPoint.x - x,
+					y: action.payload.absPoint.y - y,
+				};
+				return this.pathActions.addAnchorAction(action.payload.targetIn, position);
 			});
 	}
 }

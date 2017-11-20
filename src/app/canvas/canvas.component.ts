@@ -39,7 +39,10 @@ export class CanvasComponent implements OnInit {
 		private canvasActions: CanvasActions) { }
 
 	ngOnInit() {
+		// Update canvas board state and listen on change window size
+		this.updateCanvasPosition();
 		this.rd.listen('window', 'resize', (_e) => { this.updateCanvasPosition(); });
+
 		this.listeners$.subscribe(listeners => {
 			// clear listener from pevious tool
 			this.listeners.forEach((listenerToDestroy: Function) => listenerToDestroy());

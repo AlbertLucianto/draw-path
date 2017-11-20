@@ -10,10 +10,7 @@ import { pathReducer } from './path/path.reducer';
 export const canvasReducer: Reducer<CanvasState> = (
 	state = new CanvasState({
 		root: List([
-			new Path({ absPosition: new Position({ x: 100, y: 100 }), idx: 0 })
-				.addAnchor(new Position({ x: 100, y: 100 }))
-				.addAnchor(new Position({ x: 200, y: 200 }))
-				.addAnchor(new Position({ x: 100, y: 300 })),
+			new Path({ absPosition: new Position({ x: 100, y: 100 }), idx: 0 }),
 			new Path({ absPosition: new Position({ x: 100, y: 100 }), idx: 1 }),
 			// new Group({ absPosition: { x: 100, y: 100 }, idx: 0 }),
 		]),
