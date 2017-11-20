@@ -17,6 +17,8 @@ import { Position, RegisteredListener } from './canvas.model';
 import { Drawable } from './drawable/drawable.model';
 import { Path } from './path/path.model';
 
+const DAMP_SCROLL = 50;
+
 const filterListener = (listeners$: Observable<List<RegisteredListener>>) =>
 	listeners$.map(listeners => <List<RegisteredListener>>listeners
 		.filter(listener => listener.target === 'canvas'));
@@ -32,17 +34,28 @@ export class CanvasComponent implements OnInit {
 	listeners: Array<Function> = [];
 	@ViewChild('canvas') canvasRef: ElementRef;
 	@select(['canvas', 'root'])																			readonly root$: Observable<List<Drawable>>;
+	@select(['canvas', 'board', 'scale'])														readonly scale$: Observable<number>;
 	@select$(['toolbox', 'selected', 'listeners'], filterListener)	readonly listeners$: Observable<List<RegisteredListener>>;
 
 	constructor(
 		private rd: Renderer2,
 		private canvasActions: CanvasActions) { }
 
+	get canvasStyle$(): Observable<Object> {
+		return this.scale$.map(scale => ({
+			transform: `scale(${scale})`,
+		}));
+	}
+
 	ngOnInit() {
-		// Update canvas board state and listen on change window size
+		// Update canvas board state position; listen on change window size
 		this.updateCanvasPosition();
 		this.rd.listen('window', 'resize', (_e) => { this.updateCanvasPosition(); });
 
+		// Update canvas board state scale
+		this.rd.listen('window', 'wheel', (e: WheelEvent) => { this.updateCanvasScale(e); });
+
+		// Attach listeners as dictated by toolbox
 		this.listeners$.subscribe(listeners => {
 			// clear listener from pevious tool
 			this.listeners.forEach((listenerToDestroy: Function) => listenerToDestroy());
@@ -67,5 +80,10 @@ export class CanvasComponent implements OnInit {
 			x: this.canvasRef.nativeElement.getBoundingClientRect().left,
 			y: this.canvasRef.nativeElement.getBoundingClientRect().top,
 		});
+	}
+
+	@dispatch() updateCanvasScale = (e: WheelEvent) => {
+		e.preventDefault();
+		return this.canvasActions.updateScale(e.deltaY / DAMP_SCROLL);
 	}
 }

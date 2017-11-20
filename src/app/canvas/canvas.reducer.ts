@@ -1,11 +1,14 @@
 import { List } from 'immutable';
 import { Action, Reducer } from 'redux';
-import { CanvasActionType, IUpdatePositionAction } from './canvas.action';
+import { CanvasActionType, IUpdatePositionAction, IUpdateScaleAction } from './canvas.action';
 import { Board, CanvasState, Position } from './canvas.model';
 import { PathActionType } from './path/path.action';
 // import { Group } from './group/group.model';
 import { Path } from './path/path.model';
 import { pathReducer } from './path/path.reducer';
+
+const MIN_CANVAS_SCALE = 0.2;
+const MAX_CANVAS_SCALE = 2;
 
 export const canvasReducer: Reducer<CanvasState> = (
 	state = new CanvasState({
@@ -26,7 +29,13 @@ export const canvasReducer: Reducer<CanvasState> = (
 				const { x, y } = (<IUpdatePositionAction>action).payload;
 				return state.setIn(['board', 'topLeft'], new Position({ x, y }));
 			case CanvasActionType.CANVAS_UPDATE_SCALE:
-				return state;
+				return state.updateIn(
+					['board', 'scale'],
+					(scale: number) => (
+						Math.min(Math.max(
+							scale + (<IUpdateScaleAction>action).payload, MIN_CANVAS_SCALE),
+							MAX_CANVAS_SCALE)),
+					);
 		}
 		return state;
 };
