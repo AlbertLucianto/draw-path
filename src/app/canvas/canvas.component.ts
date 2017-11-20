@@ -17,7 +17,16 @@ import { Position, RegisteredListener } from './canvas.model';
 import { Drawable } from './drawable/drawable.model';
 import { Path } from './path/path.model';
 
+// tslint:disable-next-line:one-line
+// declare namespace NodeJS {
+// 	export interface Timer {
+// 		ref(): void;
+// 		unref(): void;
+// 	}
+// }
+
 const DAMP_SCROLL = 50;
+const DEBOUNCE_TIME = 10;
 
 const filterListener = (listeners$: Observable<List<RegisteredListener>>) =>
 	listeners$.map(listeners => <List<RegisteredListener>>listeners
@@ -36,6 +45,7 @@ export class CanvasComponent implements OnInit {
 	@select(['canvas', 'root'])																			readonly root$: Observable<List<Drawable>>;
 	@select(['canvas', 'board', 'scale'])														readonly scale$: Observable<number>;
 	@select$(['toolbox', 'selected', 'listeners'], filterListener)	readonly listeners$: Observable<List<RegisteredListener>>;
+	private timeoutId: number;
 
 	constructor(
 		private rd: Renderer2,
@@ -52,8 +62,14 @@ export class CanvasComponent implements OnInit {
 		this.updateCanvasPosition();
 		this.rd.listen('window', 'resize', (_e) => { this.updateCanvasPosition(); });
 
-		// Update canvas board state scale
-		this.rd.listen('window', 'wheel', (e: WheelEvent) => { this.updateCanvasScale(e); });
+		// Update canvas board state scale (and position too after delay)
+		this.rd.listen('window', 'wheel', (e: WheelEvent) => {
+			this.updateCanvasScale(e);
+			window.clearTimeout(this.timeoutId);
+			this.timeoutId = window.setTimeout(() => {
+				this.updateCanvasPosition();
+			}, DEBOUNCE_TIME);
+		});
 
 		// Attach listeners as dictated by toolbox
 		this.listeners$.subscribe(listeners => {
