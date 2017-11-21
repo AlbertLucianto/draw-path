@@ -1,11 +1,11 @@
 import {
-	AfterViewInit,
 	ChangeDetectionStrategy,
 	Component,
 	ComponentFactoryResolver,
 	ComponentRef,
 	Input,
 	OnDestroy,
+	OnInit,
 	ViewChild,
 	ViewContainerRef,
 	ViewEncapsulation,
@@ -36,7 +36,7 @@ const getComponentType = (typeName: DrawableType) => {
 	encapsulation: ViewEncapsulation.None,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DrawableComponent implements AfterViewInit, OnDestroy {
+export class DrawableComponent implements OnInit, OnDestroy {
 	componentRef: ComponentRef<DrawableBaseComponent>;
 	instance: DrawableBaseComponent;
 	@ViewChild(DrawableDirective, { read: ViewContainerRef }) drawableHost: ViewContainerRef;
@@ -44,7 +44,7 @@ export class DrawableComponent implements AfterViewInit, OnDestroy {
 
 	constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
 
-	ngAfterViewInit() {
+	ngOnInit() { // Using ngOnInit (instead of ngViewAfterInit) fix the templating issue
 		if (this.drawable.type) {
 			const drawableType = getComponentType(this.drawable.type);
 			const factory = this.componentFactoryResolver.resolveComponentFactory<DrawableBaseComponent>(drawableType);

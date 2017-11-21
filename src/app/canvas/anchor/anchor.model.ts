@@ -1,4 +1,5 @@
 import { List } from 'immutable';
+import { IPosition, Position } from '../canvas.model';
 import { Drawable, DrawableType, IinitDrawable } from '../drawable/drawable.model';
 
 export enum AnchorType {
@@ -31,6 +32,14 @@ export class BaseAnchor extends Drawable {
 			idx: this.idx,
 			routeParentPath: path,
 			absPosition: this.absPosition,
+		});
+	}
+
+	setPosition = (absPosition: IPosition): BaseAnchor => {
+		return new BaseAnchor({
+			idx: this.idx,
+			routeParentPath: this.routeParentPath,
+			absPosition: new Position(absPosition),
 		});
 	}
 

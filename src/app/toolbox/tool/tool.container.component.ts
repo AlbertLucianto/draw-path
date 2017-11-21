@@ -1,10 +1,10 @@
 import {
-	AfterViewInit,
 	Component,
 	ComponentFactoryResolver,
 	ComponentRef,
 	Input,
 	OnDestroy,
+	OnInit,
 	ViewChild,
 	ViewContainerRef,
 } from '@angular/core';
@@ -30,7 +30,7 @@ const getComponentType = (typeName: ToolName) => {
 	templateUrl: './tool.container.component.html',
 	styleUrls: ['./tool.container.component.scss'],
 })
-export class ToolContainerComponent implements AfterViewInit, OnDestroy {
+export class ToolContainerComponent implements OnInit, OnDestroy {
 	componentRef: ComponentRef<ToolBaseComponent>;
 	instance: ToolBaseComponent;
 	@ViewChild(ToolDirective, { read: ViewContainerRef }) toolHost: ViewContainerRef;
@@ -39,7 +39,7 @@ export class ToolContainerComponent implements AfterViewInit, OnDestroy {
 
 	constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
 
-	ngAfterViewInit() {
+	ngOnInit() {
 		if (this.type) {
 			const componentType = getComponentType(this.type);
 			const factory = this.componentFactoryResolver.resolveComponentFactory<ToolBaseComponent>(componentType);

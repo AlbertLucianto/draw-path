@@ -49,4 +49,19 @@ export class Path extends Drawable {
 			absPosition: this.absPosition,
 		});
 	}
+
+	public replaceAnchor = (idx: number, newAnchor: BaseAnchor): Path => {
+		const children = this.children.set(
+			idx, newAnchor.setRouteParentPath(this.routeParentPath.push(idx)),
+		);
+		return new Path({
+			idx: this.idx,
+			children,
+			absPosition: this.absPosition,
+		});
+	}
+
+	public updateAnchor = (idx: number, newPosition: IPosition): Path => {
+		return this.replaceAnchor(idx, this.children.get(idx).setPosition(newPosition));
+	}
 }

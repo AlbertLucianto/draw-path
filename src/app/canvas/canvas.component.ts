@@ -25,8 +25,8 @@ import { Path } from './path/path.model';
 // 	}
 // }
 
-const DAMP_SCROLL = 50;
-const DEBOUNCE_TIME = 10;
+const DAMP_SCROLL = 200;
+const DEBOUNCE_TIME = 20;
 
 const filterListener = (listeners$: Observable<List<RegisteredListener>>) =>
 	listeners$.map(listeners => <List<RegisteredListener>>listeners
