@@ -33,7 +33,7 @@ export class PathActions {
 		};
 	}
 
-	updateAnchor = (targetIn: Array<number>, anchorPosition: IPosition): IUpdateAnchorAction => {
+	updateAnchorAction = (targetIn: Array<number>, anchorPosition: IPosition): IUpdateAnchorAction => {
 		return {
 			type: PathActionType.PATH_UPDATE_ANCHOR,
 			payload: { targetIn, anchorPosition },

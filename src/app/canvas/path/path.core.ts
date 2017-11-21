@@ -9,6 +9,6 @@ export const addAnchor = (state: CanvasState, targetIn: Array<number>, anchorPos
 
 export const updateAnchor = (state: CanvasState, targetIn: Array<number>, anchorPosition: IPosition) => {
 	return state.updateIn(['root', ...targetIn.slice(0, -1)], (accessedPath: Path): Path => {
-		return accessedPath.updateAnchor(targetIn[-1], anchorPosition);
+		return accessedPath.updateAnchor(targetIn[targetIn.length - 1], anchorPosition);
 	});
 };

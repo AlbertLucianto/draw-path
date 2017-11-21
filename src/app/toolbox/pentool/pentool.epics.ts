@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { createEpicMiddleware, Epic } from 'redux-observable';
-
 import { FluxStandardAction } from 'flux-standard-action';
+import { createEpicMiddleware, Epic } from 'redux-observable';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/takeUntil';
 
 import { IBoard, IPosition } from '../../canvas/canvas.model';
 import { PathActions } from '../../canvas/path/path.action';
@@ -29,6 +30,7 @@ export class PentoolEpics {
 		return [
 			createEpicMiddleware(this.setPentoolTraitOnSelected()),
 			createEpicMiddleware(this.placeAnchorOnceInformed()),
+			createEpicMiddleware(this.addThenListenUpdateUntilAnchorPlaced()),
 		];
 	}
 
@@ -47,5 +49,21 @@ export class PentoolEpics {
 				const position = calcPositionInCanvas(<IPosition>action.payload.absPoint, boardState);
 				return this.pathActions.addAnchorAction(action.payload.targetIn, position);
 			});
+	}
+
+	private addThenListenUpdateUntilAnchorPlaced = (): Epic<FluxStandardAction<any, undefined>, IAppState> => {
+		return (action$, store) => action$
+			.ofType(PentoolActionType.PENTOOL_PLACE_ANCHOR)
+			.map(action => {
+				const boardState = <IBoard>store.getState().canvas.get('board').toJS();
+				const position = calcPositionInCanvas(<IPosition>action.payload.absPoint, boardState);
+				return this.pathActions.addAnchorAction(action.payload.targetIn, position); })
+			.switchMap(() => action$
+				.ofType(PentoolActionType.PENTOOL_MOVE_CURSOR)
+				.map(action => {
+					const boardState = <IBoard>store.getState().canvas.get('board').toJS();
+					const position = calcPositionInCanvas(<IPosition>action.payload.absPoint, boardState);
+					return this.pathActions.updateAnchorAction(action.payload.targetIn, position); })
+				.takeUntil(action$.ofType(PentoolActionType.PENTOOL_PLACE_ANCHOR)));
 	}
 }
