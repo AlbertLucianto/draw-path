@@ -4,7 +4,7 @@
 
 ## Development server
 
-1. Ensure `npm` is install on your system
+1. Ensure `npm` is installed on your system
 2. Install Angular CLI by running `npm install -g @angular/cli`
 3. Set this root repository as current working directory
 4. Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

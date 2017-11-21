@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { AnchorComponent } from './anchor/anchor.component';
+import { AnchorModule } from './anchor/anchor.module';
 import { CanvasActions } from './canvas.action';
 import { CanvasComponent } from './canvas.component';
 import { DrawableComponent } from './drawable/drawable.component';
@@ -13,9 +13,9 @@ import { PathComponent } from './path/path.component';
 @NgModule({
 	imports: [
 		CommonModule,
+		AnchorModule,
 	],
 	declarations: [
-		AnchorComponent,
 		PathComponent,
 		GroupComponent,
 		CanvasComponent,
@@ -25,7 +25,6 @@ import { PathComponent } from './path/path.component';
 	entryComponents: [
 		GroupComponent,
 		PathComponent,
-		AnchorComponent,
 	],
 	providers: [
 		PathActions,
