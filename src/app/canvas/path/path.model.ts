@@ -6,6 +6,7 @@ import { Drawable, DrawableType, IinitDrawable } from '../drawable/drawable.mode
 export class Path extends Drawable {
 	children: List<BaseAnchor>;
 	idx: number;
+	isZipped = false;
 
 	constructor(params: IinitDrawable) {
 		super({
@@ -16,18 +17,17 @@ export class Path extends Drawable {
 
 	setRouteParentPath = (path: List<number>): Path => {
 		return new Path({
+			...(<IinitDrawable>this.toObject()),
 			children: <List<BaseAnchor>>this.children.map(child => child.setRouteParentPath(path.push(this.idx))),
-			idx: this.idx,
 			routeParentPath: path,
-			absPosition: this.absPosition,
 		});
 	}
 
 	public toPath = (): string =>
-		this.children.reduce((acc, anchor) => `${acc} ${anchor.toPath()}`, '')
+		this.children.reduce((acc, anchor) => `${acc} ${anchor.toPath()}`, '').concat(this.isZipped ? 'z' : '')
 
 	/**
-	 * * Problem with immutable by adding methods which returns its own type
+	 * Problem with immutable by adding methods which returns its own type
 	 * since Immutable (Record) return type is a <K,V> pairs and cannot hold method
 	 * defined in the subclasses
 	 *
@@ -40,13 +40,12 @@ export class Path extends Drawable {
 			position = new Position(absPosition);
 		}
 		return new Path({
-			idx: this.idx,
+			...(<IinitDrawable>this.toObject()),
 			children: this.children.push(new BaseAnchor({
 				absPosition: <Position>position,
 				routeParentPath: this.routeParentPath.push(this.idx),
 				idx: this.children.size,
 			})),
-			absPosition: this.absPosition,
 		});
 	}
 
@@ -55,19 +54,23 @@ export class Path extends Drawable {
 			idx, newAnchor.setRouteParentPath(this.routeParentPath.push(idx)),
 		);
 		return new Path({
-			idx: this.idx,
+			...(<IinitDrawable>this.toObject()),
 			children,
-			absPosition: this.absPosition,
 		});
 	}
 
 	public updateAnchor = (idx: number, newPosition: IPosition): Path => {
-		// console.log(idx, this.children.size);
 		const children = this.children.updateIn([idx], child => child.setPosition(newPosition));
 		return new Path({
-			idx: this.idx,
+			...(<IinitDrawable>this.toObject()),
 			children,
-			absPosition: this.absPosition,
+		});
+	}
+
+	public zip = (): Path => {
+		return new Path({
+			...(<IinitDrawable>this.addAnchor(this.children.get(0).absPosition).toObject()),
+			isZipped: true,
 		});
 	}
 }

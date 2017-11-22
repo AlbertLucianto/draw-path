@@ -12,6 +12,7 @@ export enum PathActionType {
 	PATH_ADD_ANCHOR = 'PATH_ADD_ANCHOR',
 	PATH_UPDATE_ANCHOR = 'PATH_UPDATE_ANCHOR',
 	PATH_DELETE_ANCHOR = 'PATH_DELETE_ANCHOR',
+	PATH_ZIP_PATH = 'PATH_ZIP_PATH',
 }
 
 export interface IAddAnchorPayload {
@@ -24,6 +25,7 @@ export interface IUpdateAnchorPayload extends IAddAnchorPayload {
 
 export type IAddAnchorAction = FluxStandardAction<IAddAnchorPayload, undefined>;
 export type IUpdateAnchorAction = FluxStandardAction<IUpdateAnchorPayload, undefined>;
+export type IZipPathAction = FluxStandardAction<Array<number>, undefined>;
 
 @Injectable()
 export class PathActions {
@@ -47,6 +49,14 @@ export class PathActions {
 		return {
 			type: PathActionType.PATH_UPDATE_ANCHOR,
 			payload: { targetIn, idx, anchorPosition },
+			meta: undefined,
+		};
+	}
+
+	zipPathAction = (targetIn: Array<number>) => {
+		return {
+			type: PathActionType.PATH_ZIP_PATH,
+			payload: targetIn,
 			meta: undefined,
 		};
 	}

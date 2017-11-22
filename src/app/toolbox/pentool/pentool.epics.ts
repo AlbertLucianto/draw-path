@@ -30,6 +30,7 @@ export class PentoolEpics {
 		return [
 			createEpicMiddleware(this.setPentoolTraitOnSelected()),
 			createEpicMiddleware(this.addThenListenUpdateUntilAnchorPlaced()),
+			createEpicMiddleware(this.zipIfHeadAnchorClicked()),
 		];
 	}
 
@@ -42,7 +43,7 @@ export class PentoolEpics {
 
 	private addThenListenUpdateUntilAnchorPlaced = (): Epic<FluxStandardAction<any, undefined>, IAppState> => {
 		return (action$, store) => action$
-			.ofType(PentoolActionType.PENTOOL_MOUSE_DOWN)
+			.ofType(PentoolActionType.PENTOOL_MOUSE_DOWN_ON_CANVAS)
 			.map(action => {
 				const boardState = <IBoard>store.getState().canvas.get('board').toJS();
 				const position = calcPositionInCanvas(<IPosition>action.payload.absPoint, boardState);
@@ -50,11 +51,22 @@ export class PentoolEpics {
 			})
 			.map(action => this.pathActions.addAnchorAction(action.payload.targetIn, action.payload.anchorPosition))
 			.switchMap(() => action$
-				.ofType(PentoolActionType.PENTOOL_MOVE_CURSOR)
+				.ofType(PentoolActionType.PENTOOL_MOVE_CURSOR_ON_CANVAS)
 				.map(action => {
 					const boardState = <IBoard>store.getState().canvas.get('board').toJS();
 					const position = calcPositionInCanvas(<IPosition>action.payload.absPoint, boardState);
 					return this.pathActions.updateAnchorAction(action.payload.targetIn, action.payload.idx, position); })
-				.takeUntil(action$.ofType(PentoolActionType.PENTOOL_MOUSE_DOWN)));
+				.takeUntil(action$.ofType(PentoolActionType.PENTOOL_MOUSE_DOWN_ON_CANVAS)));
+	}
+
+	private zipIfHeadAnchorClicked = (): Epic<FluxStandardAction<any, undefined>, IAppState> => {
+		return (action$, store) => action$
+			.ofType(PentoolActionType.PENTOOL_MOUSE_DOWN_ON_ANCHOR)
+			.map(action => {
+				console.log('hello');
+				if (action.payload.isHead) {
+					return this.pathActions.zipPathAction(action.payload.targetIn);
+				}
+			});
 	}
 }

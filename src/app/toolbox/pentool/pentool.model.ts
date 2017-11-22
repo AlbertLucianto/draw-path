@@ -8,21 +8,28 @@ import { PentoolActions } from './pentool.action';
 export const createPentool = (): ToolBase => {
 	const actions = new PentoolActions();
 
-	const mouseDown = (e: MouseEvent, triggeringDrawable: Drawable) => {
+	const mouseDownOnCanvas = (e: MouseEvent, triggeringDrawable: Drawable) => {
 		const pathFromRoot = [ ...triggeringDrawable.routeParentPath.toJS(), triggeringDrawable.idx ];
-		return actions.placeAnchorAction(pathFromRoot, { x: e.clientX, y: e.clientY });
+		return actions.mouseDownOnCanvasAction(pathFromRoot, { x: e.clientX, y: e.clientY });
 	};
 
-	const mouseMove = (e: MouseEvent, triggeringDrawable: Drawable) => {
+	const mouseMoveOnCanvas = (e: MouseEvent, triggeringDrawable: Drawable) => {
 		const pathFromRoot = [ ...triggeringDrawable.routeParentPath.toJS(), triggeringDrawable.idx ];
-		return actions.moveCursorAction(pathFromRoot, triggeringDrawable.get('children').size - 1, { x: e.clientX, y: e.clientY });
+		return actions.moveCursorOnCanvasAction(pathFromRoot, triggeringDrawable.get('children').size - 1, { x: e.clientX, y: e.clientY });
+	};
+
+	const mouseDownOnHeadAnchor = (e: MouseEvent, triggeringDrawable: Drawable) => {
+		// e.stopPropagation();
+		const pathFromRoot = [ ...triggeringDrawable.routeParentPath.toJS(), triggeringDrawable.idx ];
+		return actions.mouseDownOnAnchorAction(pathFromRoot, triggeringDrawable.idx === 0);
 	};
 
 	return new ToolBase({
 		name: ToolName.PenTool,
 		listeners: List<RegisteredListener>([
-			{ name: 'mousedown', handler: mouseDown, target: 'canvas' },
-			{ name: 'mousemove', handler: mouseMove, target: 'canvas' },
+			{ name: 'mousedown', handler: mouseDownOnCanvas, target: 'canvas' },
+			{ name: 'mousemove', handler: mouseMoveOnCanvas, target: 'canvas' },
+			{ name: 'mousedown', handler: mouseDownOnHeadAnchor, target: 'anchor' },
 		]),
 	});
 };

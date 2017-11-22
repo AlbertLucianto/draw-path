@@ -52,7 +52,7 @@ export class ToolContainerComponent implements OnInit, OnDestroy {
 	ngOnDestroy() {
 		if (this.componentRef) {
 			this.componentRef.destroy();
-			this.componentRef = null;
+			this.componentRef = undefined;
 		}
 	}
 }

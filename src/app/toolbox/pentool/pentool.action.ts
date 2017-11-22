@@ -6,15 +6,16 @@ import { FluxStandardAction } from 'flux-standard-action';
  * to be able to check if an enum value is in enum keys
  */
 export enum PentoolActionType {
-	PENTOOL_MOUSE_DOWN = 'PENTOOL_MOUSE_DOWN',
-	PENTOOL_MOVE_CURSOR = 'PENTOOL_MOVE_CURSOR',
+	PENTOOL_MOUSE_DOWN_ON_CANVAS = 'PENTOOL_MOUSE_DOWN_ON_CANVAS',
+	PENTOOL_MOVE_CURSOR_ON_CANVAS = 'PENTOOL_MOVE_CURSOR_ON_CANVAS',
+	PENTOOL_MOUSE_DOWN_ON_ANCHOR = 'PENTOOL_MOUSE_DOWN_ON_ANCHOR',
 }
 
-export interface IPlaceAnchorPayload { targetIn: Array<number>; absPoint: { x: number, y: number }; }
-export interface IMoveCursorPayload extends IPlaceAnchorPayload { idx: number; }
+export interface IMouseDownOnCanvasPayload { targetIn: Array<number>; absPoint: { x: number, y: number }; }
+export interface IMoveCursorPayload extends IMouseDownOnCanvasPayload { idx: number; }
 
-export type IPlaceAnchorAction = FluxStandardAction<IPlaceAnchorPayload, undefined>;
-export type IMoveCursorAction = FluxStandardAction<IMoveCursorPayload, undefined>;
+export type IMouseDownOnCanvasAction = FluxStandardAction<IMouseDownOnCanvasPayload, undefined>;
+export type IMoveCursorOnCanvasAction = FluxStandardAction<IMoveCursorPayload, undefined>;
 
 @Injectable()
 export class PentoolActions {
@@ -25,15 +26,21 @@ export class PentoolActions {
 	 * dispatched by view components, not epics. If decorated, it will redundantly
 	 * dispatch twice.
 	 */
-	placeAnchorAction = (targetIn: Array<number>, absPoint: { x: number, y: number }): IPlaceAnchorAction => ({
-		type: PentoolActionType.PENTOOL_MOUSE_DOWN,
+	mouseDownOnCanvasAction = (targetIn: Array<number>, absPoint: { x: number, y: number }): IMouseDownOnCanvasAction => ({
+		type: PentoolActionType.PENTOOL_MOUSE_DOWN_ON_CANVAS,
 		payload: { targetIn, absPoint },
 		meta: undefined,
 	})
 
-	moveCursorAction = (targetIn: Array<number>, idx: number, absPoint: { x: number, y: number }): IMoveCursorAction => ({
-		type: PentoolActionType.PENTOOL_MOVE_CURSOR,
+	moveCursorOnCanvasAction = (targetIn: Array<number>, idx: number, absPoint: { x: number, y: number }): IMoveCursorOnCanvasAction => ({
+		type: PentoolActionType.PENTOOL_MOVE_CURSOR_ON_CANVAS,
 		payload: { targetIn, idx, absPoint },
+		meta: undefined,
+	})
+
+	mouseDownOnAnchorAction = (targetIn: Array<number>, isHead: boolean) => ({
+		type: PentoolActionType.PENTOOL_MOUSE_DOWN_ON_ANCHOR,
+		payload: { targetIn, isHead },
 		meta: undefined,
 	})
 }
