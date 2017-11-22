@@ -24,4 +24,4 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Architecture in Brief
 
-![alt text](https://albertlucianto.github.io/draw-path/draw-path-architecture.png)
+![architecture](https://albertlucianto.github.io/draw-path/draw-path-architecture.png)

@@ -1,3 +1,4 @@
+import { dispatch } from '@angular-redux/store';
 import { Injectable } from '@angular/core';
 import { FluxStandardAction } from 'flux-standard-action';
 import { IPosition } from '../canvas.model';
@@ -17,14 +18,22 @@ export interface IAddAnchorPayload {
 	targetIn: Array<number>;
 	anchorPosition: IPosition;
 }
-
-export type IUpdateAnchorPayload = IAddAnchorPayload;
+export interface IUpdateAnchorPayload extends IAddAnchorPayload {
+	idx: number;
+}
 
 export type IAddAnchorAction = FluxStandardAction<IAddAnchorPayload, undefined>;
 export type IUpdateAnchorAction = FluxStandardAction<IUpdateAnchorPayload, undefined>;
 
 @Injectable()
 export class PathActions {
+	/**
+	 * Note:
+	 *
+	 * Don't forget to add `@dispatch()` if you want to achieve continuous dispatch.
+	 * Otherwise, it will be just passing to the next operator, and only the last action is dispatched
+	 */
+	@dispatch()
 	addAnchorAction = (targetIn: Array<number>, anchorPosition: IPosition): IAddAnchorAction => {
 		return {
 			type: PathActionType.PATH_ADD_ANCHOR,
@@ -33,10 +42,11 @@ export class PathActions {
 		};
 	}
 
-	updateAnchorAction = (targetIn: Array<number>, anchorPosition: IPosition): IUpdateAnchorAction => {
+	@dispatch()
+	updateAnchorAction = (targetIn: Array<number>, idx: number, anchorPosition: IPosition): IUpdateAnchorAction => {
 		return {
 			type: PathActionType.PATH_UPDATE_ANCHOR,
-			payload: { targetIn, anchorPosition },
+			payload: { targetIn, idx, anchorPosition },
 			meta: undefined,
 		};
 	}

@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { DrawableBaseComponent } from '../drawable/drawable.base.component';
-// import { Drawable } from '../drawable/drawable.model';
 import { Path } from './path.model';
 
 @Component({

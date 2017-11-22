@@ -15,6 +15,12 @@ export type ISelectDrawableAction = FluxStandardAction<{
 
 @Injectable()
 export class SelectiontoolActions {
+	/**
+	 * Note:
+	 *
+	 * Here it does not need any `@dispatch()` decorator as it will only be
+	 * dispatched by view components, not epics
+	 */
 	selectDrawableAction = (drawable: Object): ISelectDrawableAction => ({
 		type: SelectiontoolActionType.SELECTIONTOOL_SELECT_DRAWABLE,
 		payload: { drawable },

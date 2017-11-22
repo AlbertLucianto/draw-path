@@ -13,6 +13,7 @@ export const pathReducer: Reducer<CanvasState> = (state: CanvasState, action: Ac
 			const updateAction = <IUpdateAnchorAction>action;
 			return <CanvasState>pathCore.updateAnchor(state,
 				updateAction.payload.targetIn,
+				updateAction.payload.idx,
 				updateAction.payload.anchorPosition);
 	}
 	return state;

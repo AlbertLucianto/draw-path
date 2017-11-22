@@ -7,8 +7,8 @@ export const addAnchor = (state: CanvasState, targetIn: Array<number>, anchorPos
 	});
 };
 
-export const updateAnchor = (state: CanvasState, targetIn: Array<number>, anchorPosition: IPosition) => {
-	return state.updateIn(['root', ...targetIn.slice(0, -1)], (accessedPath: Path): Path => {
-		return accessedPath.updateAnchor(targetIn[targetIn.length - 1], anchorPosition);
+export const updateAnchor = (state: CanvasState, targetIn: Array<number>, idx: number, anchorPosition: IPosition) => {
+	return state.updateIn(['root', ...targetIn], (accessedPath: Path): Path => {
+		return accessedPath.updateAnchor(idx, anchorPosition);
 	});
 };

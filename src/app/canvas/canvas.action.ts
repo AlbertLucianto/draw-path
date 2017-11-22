@@ -1,3 +1,4 @@
+import { dispatch } from '@angular-redux/store';
 import { Injectable } from '@angular/core';
 import { FluxStandardAction } from 'flux-standard-action';
 
@@ -17,12 +18,14 @@ export type IUpdateScaleAction = FluxStandardAction<number, undefined>;
 
 @Injectable()
 export class CanvasActions {
+	@dispatch()
 	updatePosition = (position: IPosition): IUpdatePositionAction => ({
 		type: CanvasActionType.CANVAS_UPDATE_POSITION,
 		payload: position,
 		meta: undefined,
 	})
 
+	@dispatch()
 	updateScale = (scaleBy: number): IUpdateScaleAction => ({
 		type: CanvasActionType.CANVAS_UPDATE_SCALE,
 		payload: scaleBy,

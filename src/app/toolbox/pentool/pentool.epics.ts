@@ -29,7 +29,6 @@ export class PentoolEpics {
 	public createEpics = () => {
 		return [
 			createEpicMiddleware(this.setPentoolTraitOnSelected()),
-			createEpicMiddleware(this.placeAnchorOnceInformed()),
 			createEpicMiddleware(this.addThenListenUpdateUntilAnchorPlaced()),
 		];
 	}
@@ -41,29 +40,21 @@ export class PentoolEpics {
 			.map(action => this.toolboxActions.setToolTraitAction(createPentool()));
 	}
 
-	private placeAnchorOnceInformed = (): Epic<FluxStandardAction<any, undefined>, IAppState> => {
+	private addThenListenUpdateUntilAnchorPlaced = (): Epic<FluxStandardAction<any, undefined>, IAppState> => {
 		return (action$, store) => action$
-			.ofType(PentoolActionType.PENTOOL_PLACE_ANCHOR)
+			.ofType(PentoolActionType.PENTOOL_MOUSE_DOWN)
 			.map(action => {
 				const boardState = <IBoard>store.getState().canvas.get('board').toJS();
 				const position = calcPositionInCanvas(<IPosition>action.payload.absPoint, boardState);
 				return this.pathActions.addAnchorAction(action.payload.targetIn, position);
-			});
-	}
-
-	private addThenListenUpdateUntilAnchorPlaced = (): Epic<FluxStandardAction<any, undefined>, IAppState> => {
-		return (action$, store) => action$
-			.ofType(PentoolActionType.PENTOOL_PLACE_ANCHOR)
-			.map(action => {
-				const boardState = <IBoard>store.getState().canvas.get('board').toJS();
-				const position = calcPositionInCanvas(<IPosition>action.payload.absPoint, boardState);
-				return this.pathActions.addAnchorAction(action.payload.targetIn, position); })
+			})
+			.map(action => this.pathActions.addAnchorAction(action.payload.targetIn, action.payload.anchorPosition))
 			.switchMap(() => action$
 				.ofType(PentoolActionType.PENTOOL_MOVE_CURSOR)
 				.map(action => {
 					const boardState = <IBoard>store.getState().canvas.get('board').toJS();
 					const position = calcPositionInCanvas(<IPosition>action.payload.absPoint, boardState);
-					return this.pathActions.updateAnchorAction(action.payload.targetIn, position); })
-				.takeUntil(action$.ofType(PentoolActionType.PENTOOL_PLACE_ANCHOR)));
+					return this.pathActions.updateAnchorAction(action.payload.targetIn, action.payload.idx, position); })
+				.takeUntil(action$.ofType(PentoolActionType.PENTOOL_MOUSE_DOWN)));
 	}
 }

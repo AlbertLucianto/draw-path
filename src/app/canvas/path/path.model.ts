@@ -62,6 +62,12 @@ export class Path extends Drawable {
 	}
 
 	public updateAnchor = (idx: number, newPosition: IPosition): Path => {
-		return this.replaceAnchor(idx, this.children.get(idx).setPosition(newPosition));
+		// console.log(idx, this.children.size);
+		const children = this.children.updateIn([idx], child => child.setPosition(newPosition));
+		return new Path({
+			idx: this.idx,
+			children,
+			absPosition: this.absPosition,
+		});
 	}
 }

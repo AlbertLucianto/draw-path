@@ -27,6 +27,12 @@ export type IToolboxGeneralAction = FluxStandardAction<{ // Need to improve to b
 
 @Injectable()
 export class ToolboxActions {
+	/**
+	 * Note:
+	 *
+	 * Here it does not need any `@dispatch()` decorator as it will only be
+	 * dispatched by view components, not epics
+	 */
 	selectToolAction = (toolName: ToolName): ISelectToolAction => ({
 		type: ToolboxActionType.TOOLBOX_SELECT_TOOL,
 		payload: { toolName },

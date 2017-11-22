@@ -14,12 +14,8 @@ export const createPentool = (): ToolBase => {
 	};
 
 	const mouseMove = (e: MouseEvent, triggeringDrawable: Drawable) => {
-		const pathFromRoot = [
-			...triggeringDrawable.routeParentPath.toJS(),
-			triggeringDrawable.idx,
-			triggeringDrawable.get('children').size,
-		];
-		return actions.moveCursorAction(pathFromRoot, { x: e.clientX, y: e.clientY });
+		const pathFromRoot = [ ...triggeringDrawable.routeParentPath.toJS(), triggeringDrawable.idx ];
+		return actions.moveCursorAction(pathFromRoot, triggeringDrawable.get('children').size - 1, { x: e.clientX, y: e.clientY });
 	};
 
 	return new ToolBase({
