@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
 import { FluxStandardAction } from 'flux-standard-action';
 import { createEpicMiddleware, Epic } from 'redux-observable';
+import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs/Subject';
 
 import { IBoard, IPosition } from '../../canvas/canvas.model';
-import { PathActions } from '../../canvas/path/path.action';
+import { PathActions, PathActionType } from '../../canvas/path/path.action';
 import { IAppState } from '../../store/model';
 import { IToolboxGeneralAction, ToolboxActions, ToolboxActionType } from '../toolbox.action';
 import { ToolName } from '../toolbox.model';
 import { PentoolActionType } from './pentool.action';
 import { createPentool } from './pentool.model';
+
+const doneAction = { type: 'DONE', payload: undefined, meta: undefined };
 
 const calcPositionInCanvas = (input: IPosition, boardState: IBoard): IPosition => {
 	const { moved, scale, topLeft } = boardState;
@@ -65,19 +68,18 @@ export class PentoolEpics {
 					.takeUntil(afterDown
 						.map(action => this.pathActions.removeLastAnchorAction(action.payload.targetIn)),
 					),
-				);
+				)
+				.takeUntil(action$.ofType(PathActionType.PATH_ZIP_PATH));
 		};
 	}
 
 	private zipIfHeadAnchorClicked = (): Epic<FluxStandardAction<any, undefined>, IAppState> => {
 		return (action$, store) => action$
-			.ofType(PentoolActionType.PENTOOL_MOUSE_DOWN_ON_ANCHOR)
-			.map(action => {
-				if (action.payload.isHead) {
-					return this.pathActions.zipPathAction(action.payload.targetIn);
-				} else {
-					return { type: 'NOTHING', payload: undefined, meta: undefined };
-				}
-			});
+			.filter(action =>
+				action.type === PentoolActionType.PENTOOL_MOUSE_DOWN_ON_ANCHOR
+				&& action.payload.idx === 0)
+			.map(action => this.pathActions.removeLastAnchorAction(action.payload.targetIn))
+			.map(action => this.pathActions.zipPathAction(action.payload))
+			.mapTo(doneAction);
 	}
 }

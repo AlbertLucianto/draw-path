@@ -6,6 +6,7 @@ import {
 	IRemoveAnchorAction,
 	IRemoveLastAnchorAction,
 	IUpdateAnchorAction,
+	IZipPathAction,
 	PathActionType,
 } from './path.action';
 import * as pathCore from './path.core';
@@ -27,6 +28,9 @@ export const pathReducer: Reducer<CanvasState> = (state: CanvasState, action: Ac
 		case PathActionType.PATH_REMOVE_LAST_ANCHOR:
 			const removeLastAction = <IRemoveLastAnchorAction>action;
 			return <CanvasState>pathCore.removeLastAnhcor(state, removeLastAction.payload);
+		case PathActionType.PATH_ZIP_PATH:
+			const zipAction = <IZipPathAction>action;
+			return <CanvasState>pathCore.zipPath(state, zipAction.payload);
 	}
 	return state;
 };

@@ -13,9 +13,11 @@ export enum PentoolActionType {
 
 export interface IMouseDownOnCanvasPayload { targetIn: Array<number>; absPoint: { x: number, y: number }; }
 export interface IMoveCursorPayload extends IMouseDownOnCanvasPayload { idx: number; }
+export interface IMouseDownOnAnchorPayload { targetIn: Array<number>; idx: number; }
 
 export type IMouseDownOnCanvasAction = FluxStandardAction<IMouseDownOnCanvasPayload, undefined>;
 export type IMoveCursorOnCanvasAction = FluxStandardAction<IMoveCursorPayload, undefined>;
+export type IMouseDownOnAnchorAction = FluxStandardAction<IMouseDownOnAnchorPayload, undefined>;
 
 @Injectable()
 export class PentoolActions {
@@ -38,9 +40,9 @@ export class PentoolActions {
 		meta: undefined,
 	})
 
-	mouseDownOnAnchorAction = (targetIn: Array<number>, isHead: boolean) => ({
+	mouseDownOnAnchorAction = (targetIn: Array<number>, idx: number): IMouseDownOnAnchorAction => ({
 		type: PentoolActionType.PENTOOL_MOUSE_DOWN_ON_ANCHOR,
-		payload: { targetIn, isHead },
+		payload: { targetIn, idx },
 		meta: undefined,
 	})
 }

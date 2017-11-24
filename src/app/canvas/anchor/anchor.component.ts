@@ -15,6 +15,7 @@ import { Observable } from 'rxjs/Observable';
 import { BaseAnchor } from '../anchor/anchor.model';
 import { RegisteredListener } from '../canvas.model';
 import { DrawableBaseComponent } from '../drawable/drawable.base.component';
+import { Drawable } from '../drawable/drawable.model';
 
 const filterListener = (listeners$: Observable<List<RegisteredListener>>) =>
 	listeners$.map(listeners => <List<RegisteredListener>>listeners
@@ -33,9 +34,9 @@ export class AnchorComponent extends DrawableBaseComponent implements OnInit {
 	@Input() drawable: BaseAnchor;
 	@select$(['toolbox', 'selected', 'listeners'], filterListener)	readonly listeners$: Observable<List<RegisteredListener>>;
 
-	constructor(
-		private rd: Renderer2,
-	) { super(); }
+	constructor(private rd: Renderer2) {
+		super();
+	}
 
 	get style() {
 		return {
@@ -51,14 +52,17 @@ export class AnchorComponent extends DrawableBaseComponent implements OnInit {
 			this.listeners.forEach((listenerToDestroy: Function) => listenerToDestroy());
 			listeners.forEach(listener => {
 				this.listeners.push(this.rd.listen(this.anchorRef.nativeElement, listener.name,
-					(e: MouseEvent) => this.dispatchRegisteredAction(listener.handler, e),
+					(e: MouseEvent) => this.dispatchRegisteredAction(listener.handler, e, this.drawable),
 				));
 			});
 		});
 	}
 
-	@dispatch() dispatchRegisteredAction = (handler: Function, e: MouseEvent) => {
-		return handler(e, this.drawable);
+	/**
+	 * Need to pass `drawableRef` because calling `this` in the function
+	 * will refer the drawable from the currentTarget (last anchor)
+	 */
+	@dispatch() dispatchRegisteredAction = (handler: Function, e: MouseEvent, drawableRef: Drawable) => {
+		return handler(e, drawableRef);
 	}
-
 }

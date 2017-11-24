@@ -29,7 +29,7 @@ export class Path extends Drawable {
 	}
 
 	public toPath = (): string =>
-		this.children.reduce((acc, anchor) => `${acc} ${anchor.toPath()}`, '').concat(this.isZipped ? 'z' : '')
+		this.children.reduce((acc, anchor) => `${acc} ${anchor.toPath()}`, '').concat(this.isZipped ? ' z' : '')
 
 	/**
 	 * Problem with immutable by adding methods which returns its own type
@@ -85,9 +85,8 @@ export class Path extends Drawable {
 	}
 
 	public zip = (): Path => {
-		console.log('zipping');
 		return new Path({
-			...(<IinitPath>this.addAnchor(this.children.get(0).absPosition).toObject()),
+			...(<IinitPath>this.toObject()),
 			isZipped: true,
 		});
 	}

@@ -24,3 +24,9 @@ export const removeLastAnhcor = (state: CanvasState, targetIn: Array<number>) =>
 		return accessedPath.removeLastAnchor();
 	});
 };
+
+export const zipPath = (state: CanvasState, targetIn: Array<number>) => {
+	return state.updateIn(['root', ...targetIn], (accessedPath: Path): Path => {
+		return accessedPath.zip();
+	});
+};

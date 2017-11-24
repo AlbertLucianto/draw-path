@@ -14,6 +14,7 @@ import { Path } from './path.model';
 export class PathComponent extends DrawableBaseComponent implements OnInit {
 	@Input() drawable: Path;
 
-	ngOnInit() { }
-
+	ngOnInit() {
+		console.log(this.drawable.toPath());
+	}
 }
