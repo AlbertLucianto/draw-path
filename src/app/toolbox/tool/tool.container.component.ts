@@ -9,6 +9,7 @@ import {
 	ViewContainerRef,
 } from '@angular/core';
 
+import { CanvastoolComponent } from '../canvastool/canvastool.component';
 import { PentoolComponent } from '../pentool/pentool.component';
 import { SelectiontoolComponent } from '../selectiontool/selectiontool.component';
 import { ToolName } from '../toolbox.model';
@@ -16,8 +17,9 @@ import { IToolContext, ToolBaseComponent } from './tool.base.component';
 import { ToolDirective } from './tool.directive';
 
 const mappings = {
-	[ToolName.PenTool]: PentoolComponent,
-	[ToolName.SelectionTool]: SelectiontoolComponent,
+	[ToolName.Pentool]: PentoolComponent,
+	[ToolName.Selectiontool]: SelectiontoolComponent,
+	[ToolName.Canvastool]: CanvastoolComponent,
 };
 
 const getComponentType = (typeName: ToolName) => {

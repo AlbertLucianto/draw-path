@@ -2,8 +2,9 @@ import { Record } from 'immutable';
 import { IToolBase, ToolBase } from './tool/tool.model';
 
 export enum ToolName {
-	PenTool = 'PENTOOL',
-	SelectionTool = 'SELECTIONTOOL',
+	Pentool = 'PENTOOL',
+	Selectiontool = 'SELECTIONTOOL',
+	Canvastool = 'CANVASTOOL',
 }
 
 export class ToolboxState extends Record({ selected: {} }) {

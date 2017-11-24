@@ -17,8 +17,9 @@ import { toolboxReducer } from './toolbox.reducer';
 })
 export class ToolboxComponent {
 	public toolList = [
-		ToolName.SelectionTool,
-		ToolName.PenTool,
+		ToolName.Selectiontool,
+		ToolName.Pentool,
+		ToolName.Canvastool,
 	];
 	@select(['selected', 'name']) readonly selected$: Observable<ToolName>;
 

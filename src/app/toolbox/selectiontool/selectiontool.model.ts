@@ -8,7 +8,7 @@ import { ToolName } from '../toolbox.model';
 export const createSelectiontool = (): ToolBase => {
 	// const actions = new SelectiontoolActions();
 	return new ToolBase({
-		name: ToolName.SelectionTool,
+		name: ToolName.Selectiontool,
 		listeners: List<RegisteredListener>([]),
 	});
 };

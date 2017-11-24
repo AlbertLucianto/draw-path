@@ -25,7 +25,7 @@ export const createPentool = (): ToolBase => {
 	};
 
 	return new ToolBase({
-		name: ToolName.PenTool,
+		name: ToolName.Pentool,
 		listeners: List<RegisteredListener>([
 			{ name: 'mousedown', handler: mouseDownOnCanvas, target: 'canvas' },
 			{ name: 'mousemove', handler: mouseMoveOnCanvas, target: 'canvas' },

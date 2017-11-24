@@ -1,5 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+
+import { CanvastoolComponent } from './canvastool/canvastool.component';
+import { CanvastoolEpics } from './canvastool/canvastool.epics';
 import { PentoolActions } from './pentool/pentool.action';
 import { PentoolComponent } from './pentool/pentool.component';
 import { PentoolEpics } from './pentool/pentool.epics';
@@ -22,12 +25,15 @@ import { ToolboxEpics } from './toolbox.epics';
 		PentoolComponent,
 		SelectiontoolComponent,
 		ToolDirective,
+		CanvastoolComponent,
 	],
 	entryComponents: [
 		PentoolComponent,
 		SelectiontoolComponent,
+		CanvastoolComponent,
 	],
 	providers: [
+		CanvastoolEpics,
 		ToolboxActions,
 		ToolboxEpics,
 		PentoolActions,

@@ -42,7 +42,7 @@ export class PentoolEpics {
 	private setPentoolTraitOnSelected = (): Epic<IToolboxGeneralAction, IAppState> => {
 		return (action$, store) => action$
 			.ofType(ToolboxActionType.TOOLBOX_SELECT_TOOL)
-			.filter(action => action.payload.toolName === ToolName.PenTool)
+			.filter(action => action.payload.toolName === ToolName.Pentool)
 			.map(action => this.toolboxActions.setToolTraitAction(createPentool()));
 	}
 
@@ -80,6 +80,6 @@ export class PentoolEpics {
 				&& action.payload.idx === 0)
 			.map(action => this.pathActions.removeLastAnchorAction(action.payload.targetIn))
 			.map(action => this.pathActions.zipPathAction(action.payload))
-			.mapTo(doneAction);
+			.mapTo(doneAction); // Preventing double dispatch
 	}
 }
