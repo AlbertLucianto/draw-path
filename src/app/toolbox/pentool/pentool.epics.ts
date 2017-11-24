@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { FluxStandardAction } from 'flux-standard-action';
 import { createEpicMiddleware, Epic } from 'redux-observable';
+import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/takeUntil';
+import { Subject } from 'rxjs/Subject';
 
 import { IBoard, IPosition } from '../../canvas/canvas.model';
 import { PathActions } from '../../canvas/path/path.action';
@@ -42,30 +44,39 @@ export class PentoolEpics {
 	}
 
 	private addThenListenUpdateUntilAnchorPlaced = (): Epic<FluxStandardAction<any, undefined>, IAppState> => {
-		return (action$, store) => action$
-			.ofType(PentoolActionType.PENTOOL_MOUSE_DOWN_ON_CANVAS)
-			.map(action => {
-				const boardState = <IBoard>store.getState().canvas.get('board').toJS();
-				const position = calcPositionInCanvas(<IPosition>action.payload.absPoint, boardState);
-				return this.pathActions.addAnchorAction(action.payload.targetIn, position);
-			})
-			.map(action => this.pathActions.addAnchorAction(action.payload.targetIn, action.payload.anchorPosition))
-			.switchMap(() => action$
-				.ofType(PentoolActionType.PENTOOL_MOVE_CURSOR_ON_CANVAS)
+		return (action$, store) => {
+			const afterDown = new Subject<FluxStandardAction<any, undefined>>();
+			return action$
+				.ofType(PentoolActionType.PENTOOL_MOUSE_DOWN_ON_CANVAS)
 				.map(action => {
+					afterDown.next(action);
 					const boardState = <IBoard>store.getState().canvas.get('board').toJS();
 					const position = calcPositionInCanvas(<IPosition>action.payload.absPoint, boardState);
-					return this.pathActions.updateAnchorAction(action.payload.targetIn, action.payload.idx, position); })
-				.takeUntil(action$.ofType(PentoolActionType.PENTOOL_MOUSE_DOWN_ON_CANVAS)));
+					return this.pathActions.addAnchorAction(action.payload.targetIn, position);
+				})
+				.map(action => this.pathActions.addAnchorAction(action.payload.targetIn, action.payload.anchorPosition))
+				.switchMap(() => action$
+					.ofType(PentoolActionType.PENTOOL_MOVE_CURSOR_ON_CANVAS)
+					.map(action => {
+						const boardState = <IBoard>store.getState().canvas.get('board').toJS();
+						const position = calcPositionInCanvas(<IPosition>action.payload.absPoint, boardState);
+						return this.pathActions.updateAnchorAction(action.payload.targetIn, action.payload.idx, position);
+					})
+					.takeUntil(afterDown
+						.map(action => this.pathActions.removeLastAnchorAction(action.payload.targetIn)),
+					),
+				);
+		};
 	}
 
 	private zipIfHeadAnchorClicked = (): Epic<FluxStandardAction<any, undefined>, IAppState> => {
 		return (action$, store) => action$
 			.ofType(PentoolActionType.PENTOOL_MOUSE_DOWN_ON_ANCHOR)
 			.map(action => {
-				console.log('hello');
 				if (action.payload.isHead) {
 					return this.pathActions.zipPathAction(action.payload.targetIn);
+				} else {
+					return { type: 'NOTHING', payload: undefined, meta: undefined };
 				}
 			});
 	}

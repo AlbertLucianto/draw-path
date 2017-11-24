@@ -13,9 +13,8 @@ import 'rxjs/add/operator/filter';
 import { Observable } from 'rxjs/Observable';
 
 import { BaseAnchor } from '../anchor/anchor.model';
-import { Position, RegisteredListener } from '../canvas.model';
+import { RegisteredListener } from '../canvas.model';
 import { DrawableBaseComponent } from '../drawable/drawable.base.component';
-import { Path } from '../path/path.model';
 
 const filterListener = (listeners$: Observable<List<RegisteredListener>>) =>
 	listeners$.map(listeners => <List<RegisteredListener>>listeners
@@ -41,6 +40,7 @@ export class AnchorComponent extends DrawableBaseComponent implements OnInit {
 	get style() {
 		return {
 			transform: this.drawable.toTransform(),
+			display: this.drawable.idx === 0 ? 'block' : 'none', // Test only for stopping cursor following
 		};
 	}
 
@@ -58,11 +58,7 @@ export class AnchorComponent extends DrawableBaseComponent implements OnInit {
 	}
 
 	@dispatch() dispatchRegisteredAction = (handler: Function, e: MouseEvent) => {
-		return handler(e, new Path({
-			routeParentPath: List([]),
-			idx: 0,
-			absPosition: new Position({ x: 0, y: 0 }),
-		})); // Still hardcoded, update later when there is 'selectedDrawable' state
+		return handler(e, this.drawable);
 	}
 
 }

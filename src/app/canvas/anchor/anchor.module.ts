@@ -4,6 +4,7 @@ import { AnchorComponent } from './anchor.component';
 import { BasicAnchorComponent } from './basic/basic.component';
 import { BezierAnchorComponent } from './bezier/bezier.component';
 import { CubicAnchorComponent } from './cubic/cubic.component';
+import { InvisibleComponent } from './invisible/invisible.component';
 
 @NgModule({
 	imports: [
@@ -14,6 +15,7 @@ import { CubicAnchorComponent } from './cubic/cubic.component';
 		BasicAnchorComponent,
 		AnchorComponent,
 		CubicAnchorComponent,
+		InvisibleComponent,
 	],
 	entryComponents: [
 		BezierAnchorComponent,

@@ -12,3 +12,15 @@ export const updateAnchor = (state: CanvasState, targetIn: Array<number>, idx: n
 		return accessedPath.updateAnchor(idx, anchorPosition);
 	});
 };
+
+export const removeAnchor = (state: CanvasState, targetIn: Array<number>, idx: number) => {
+	return state.updateIn(['root', ...targetIn], (accessedPath: Path): Path => {
+		return accessedPath.removeAnchor(idx);
+	});
+};
+
+export const removeLastAnhcor = (state: CanvasState, targetIn: Array<number>) => {
+	return state.updateIn(['root', ...targetIn], (accessedPath: Path): Path => {
+		return accessedPath.removeLastAnchor();
+	});
+};

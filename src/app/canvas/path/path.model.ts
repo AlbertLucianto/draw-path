@@ -3,21 +3,26 @@ import { BaseAnchor } from '../anchor/anchor.model';
 import { IPosition, Position } from '../canvas.model';
 import { Drawable, DrawableType, IinitDrawable } from '../drawable/drawable.model';
 
+export interface IinitPath extends IinitDrawable {
+	isZipped?: boolean;
+}
+
 export class Path extends Drawable {
 	children: List<BaseAnchor>;
 	idx: number;
-	isZipped = false;
+	isZipped: boolean;
 
-	constructor(params: IinitDrawable) {
+	constructor(params: IinitPath) {
 		super({
 			...params,
 			type: DrawableType.Path,
 		});
+		this.isZipped = !!params.isZipped;
 	}
 
 	setRouteParentPath = (path: List<number>): Path => {
 		return new Path({
-			...(<IinitDrawable>this.toObject()),
+			...(<IinitPath>this.toObject()),
 			children: <List<BaseAnchor>>this.children.map(child => child.setRouteParentPath(path.push(this.idx))),
 			routeParentPath: path,
 		});
@@ -40,7 +45,7 @@ export class Path extends Drawable {
 			position = new Position(absPosition);
 		}
 		return new Path({
-			...(<IinitDrawable>this.toObject()),
+			...(<IinitPath>this.toObject()),
 			children: this.children.push(new BaseAnchor({
 				absPosition: <Position>position,
 				routeParentPath: this.routeParentPath.push(this.idx),
@@ -54,7 +59,7 @@ export class Path extends Drawable {
 			idx, newAnchor.setRouteParentPath(this.routeParentPath.push(idx)),
 		);
 		return new Path({
-			...(<IinitDrawable>this.toObject()),
+			...(<IinitPath>this.toObject()),
 			children,
 		});
 	}
@@ -62,14 +67,27 @@ export class Path extends Drawable {
 	public updateAnchor = (idx: number, newPosition: IPosition): Path => {
 		const children = this.children.updateIn([idx], child => child.setPosition(newPosition));
 		return new Path({
-			...(<IinitDrawable>this.toObject()),
+			...(<IinitPath>this.toObject()),
 			children,
 		});
 	}
 
-	public zip = (): Path => {
+	public removeAnchor = (idx: number): Path => {
+		const children = this.children.remove(idx);
 		return new Path({
-			...(<IinitDrawable>this.addAnchor(this.children.get(0).absPosition).toObject()),
+			...(<IinitPath>this.toObject()),
+			children,
+		});
+	}
+
+	public removeLastAnchor = (): Path => {
+		return this.removeAnchor(this.children.size - 1);
+	}
+
+	public zip = (): Path => {
+		console.log('zipping');
+		return new Path({
+			...(<IinitPath>this.addAnchor(this.children.get(0).absPosition).toObject()),
 			isZipped: true,
 		});
 	}

@@ -1,7 +1,13 @@
 import { Action, Reducer } from 'redux';
 
 import { CanvasState } from '../canvas.model';
-import {  IAddAnchorAction, IUpdateAnchorAction, PathActionType } from './path.action';
+import {
+	IAddAnchorAction,
+	IRemoveAnchorAction,
+	IRemoveLastAnchorAction,
+	IUpdateAnchorAction,
+	PathActionType,
+} from './path.action';
 import * as pathCore from './path.core';
 
 export const pathReducer: Reducer<CanvasState> = (state: CanvasState, action: Action) => {
@@ -15,6 +21,12 @@ export const pathReducer: Reducer<CanvasState> = (state: CanvasState, action: Ac
 				updateAction.payload.targetIn,
 				updateAction.payload.idx,
 				updateAction.payload.anchorPosition);
+		case PathActionType.PATH_REMOVE_ANCHOR:
+			const removeAction = <IRemoveAnchorAction>action;
+			return <CanvasState>pathCore.removeAnchor(state, removeAction.payload.targetIn, removeAction.payload.idx);
+		case PathActionType.PATH_REMOVE_LAST_ANCHOR:
+			const removeLastAction = <IRemoveLastAnchorAction>action;
+			return <CanvasState>pathCore.removeLastAnhcor(state, removeLastAction.payload);
 	}
 	return state;
 };

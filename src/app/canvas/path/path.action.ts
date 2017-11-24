@@ -11,7 +11,8 @@ import { IPosition } from '../canvas.model';
 export enum PathActionType {
 	PATH_ADD_ANCHOR = 'PATH_ADD_ANCHOR',
 	PATH_UPDATE_ANCHOR = 'PATH_UPDATE_ANCHOR',
-	PATH_DELETE_ANCHOR = 'PATH_DELETE_ANCHOR',
+	PATH_REMOVE_ANCHOR = 'PATH_REMOVE_ANCHOR',
+	PATH_REMOVE_LAST_ANCHOR = 'PATH_REMOVE_LAST_ANCHOR',
 	PATH_ZIP_PATH = 'PATH_ZIP_PATH',
 }
 
@@ -22,9 +23,15 @@ export interface IAddAnchorPayload {
 export interface IUpdateAnchorPayload extends IAddAnchorPayload {
 	idx: number;
 }
+export interface IRemoveAnchorPayload {
+	targetIn: Array<number>;
+	idx: number;
+}
 
 export type IAddAnchorAction = FluxStandardAction<IAddAnchorPayload, undefined>;
 export type IUpdateAnchorAction = FluxStandardAction<IUpdateAnchorPayload, undefined>;
+export type IRemoveAnchorAction = FluxStandardAction<IRemoveAnchorPayload, undefined>;
+export type IRemoveLastAnchorAction = FluxStandardAction<Array<number>, undefined>;
 export type IZipPathAction = FluxStandardAction<Array<number>, undefined>;
 
 @Injectable()
@@ -53,6 +60,25 @@ export class PathActions {
 		};
 	}
 
+	@dispatch()
+	removeAnchorAction = (targetIn: number[], idx: number): IRemoveAnchorAction => {
+		return {
+			type: PathActionType.PATH_REMOVE_ANCHOR,
+			payload: { targetIn, idx },
+			meta: undefined,
+		};
+	}
+
+	@dispatch()
+	removeLastAnchorAction = (targetIn: number[]): IRemoveLastAnchorAction => {
+		return {
+			type: PathActionType.PATH_REMOVE_LAST_ANCHOR,
+			payload: targetIn,
+			meta: undefined,
+		};
+	}
+
+	@dispatch()
 	zipPathAction = (targetIn: Array<number>) => {
 		return {
 			type: PathActionType.PATH_ZIP_PATH,
