@@ -18,14 +18,6 @@ import { IPosition, Position, RegisteredListener } from './canvas.model';
 import { Drawable } from './drawable/drawable.model';
 import { Path } from './path/path.model';
 
-// tslint:disable-next-line:one-line
-// declare namespace NodeJS {
-// 	export interface Timer {
-// 		ref(): void;
-// 		unref(): void;
-// 	}
-// }
-
 const DAMP_SCROLL = 200;
 const DEBOUNCE_TIME = 20;
 
@@ -60,8 +52,8 @@ export class CanvasComponent implements OnInit {
 		);
 		return style$.map(styles => ({
 			transform: `
-			scale(${styles[0]})
 			translate(${styles[1].x}px, ${styles[1].y}px)
+			scale(${styles[0]})
 			`,
 		}));
 	}
