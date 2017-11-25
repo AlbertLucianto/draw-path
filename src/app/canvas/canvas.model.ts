@@ -60,7 +60,7 @@ export class Size extends Record({ width: 0, height: 0 }) {
 	}
 }
 
-export type ActionFromEvent = (event: Event, triggeringDrawable: Drawable) => Action;
+export type ActionFromEvent = (event: Event, triggeringDrawable: Drawable, currentDrawable?: Drawable) => Action;
 
 export interface RegisteredListener {
 	name: string;

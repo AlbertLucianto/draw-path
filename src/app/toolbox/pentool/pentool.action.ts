@@ -7,7 +7,7 @@ import { FluxStandardAction } from 'flux-standard-action';
  */
 export enum PentoolActionType {
 	PENTOOL_MOUSE_DOWN_ON_CANVAS = 'PENTOOL_MOUSE_DOWN_ON_CANVAS',
-	PENTOOL_MOVE_CURSOR_ON_CANVAS = 'PENTOOL_MOVE_CURSOR_ON_CANVAS',
+	PENTOOL_MOUSE_MOVE_ON_CANVAS = 'PENTOOL_MOUSE_MOVE_ON_CANVAS',
 	PENTOOL_MOUSE_DOWN_ON_ANCHOR = 'PENTOOL_MOUSE_DOWN_ON_ANCHOR',
 }
 
@@ -35,7 +35,7 @@ export class PentoolActions {
 	})
 
 	moveCursorOnCanvasAction = (targetIn: Array<number>, idx: number, absPoint: { x: number, y: number }): IMoveCursorOnCanvasAction => ({
-		type: PentoolActionType.PENTOOL_MOVE_CURSOR_ON_CANVAS,
+		type: PentoolActionType.PENTOOL_MOUSE_MOVE_ON_CANVAS,
 		payload: { targetIn, idx, absPoint },
 		meta: undefined,
 	})

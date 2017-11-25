@@ -8,7 +8,7 @@ import { IPosition } from '../../canvas/canvas.model';
  */
 export enum CanvastoolActionType {
 	CANVASTOOL_MOUSE_DOWN_ON_CANVAS = 'CANVASTOOL_MOUSE_DOWN_ON_CANVAS',
-	CANVASTOOL_MOVE_CURSOR_ON_CANVAS = 'CANVASTOOL_MOVE_CURSOR_ON_CANVAS',
+	CANVASTOOL_MOUSE_MOVE_ON_CANVAS = 'CANVASTOOL_MOUSE_MOVE_ON_CANVAS',
 	CANVASTOOL_MOUSE_UP_ON_CANVAS = 'CANVASTOOL_MOUSE_UP_ON_CANVAS',
 }
 
@@ -30,7 +30,7 @@ export class CanvastoolActions {
 	})
 
 	moveCursorOnCanvasAction = (currentPosition: IPosition): ICanvasMoveAction => ({
-		type: CanvastoolActionType.CANVASTOOL_MOUSE_DOWN_ON_CANVAS,
+		type: CanvastoolActionType.CANVASTOOL_MOUSE_MOVE_ON_CANVAS,
 		payload: currentPosition,
 		meta: undefined,
 	})

@@ -9,11 +9,12 @@ import {
 	ViewEncapsulation,
 } from '@angular/core';
 import { List } from 'immutable';
+import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/filter';
 import { Observable } from 'rxjs/Observable';
 
 import { CanvasActions } from './canvas.action';
-import { Position, RegisteredListener } from './canvas.model';
+import { IPosition, Position, RegisteredListener } from './canvas.model';
 import { Drawable } from './drawable/drawable.model';
 import { Path } from './path/path.model';
 
@@ -44,6 +45,7 @@ export class CanvasComponent implements OnInit {
 	@ViewChild('canvas') canvasRef: ElementRef;
 	@select(['canvas', 'root'])																			readonly root$: Observable<List<Drawable>>;
 	@select(['canvas', 'board', 'scale'])														readonly scale$: Observable<number>;
+	@select(['canvas', 'board', 'moved'])														readonly moved$: Observable<IPosition>;
 	@select$(['toolbox', 'selected', 'listeners'], filterListener)	readonly listeners$: Observable<List<RegisteredListener>>;
 	private timeoutId: number;
 
@@ -52,8 +54,15 @@ export class CanvasComponent implements OnInit {
 		private canvasActions: CanvasActions) { }
 
 	get canvasStyle$(): Observable<Object> {
-		return this.scale$.map(scale => ({
-			transform: `scale(${scale})`,
+		const style$ = Observable.combineLatest(
+			this.scale$,
+			this.moved$,
+		);
+		return style$.map(styles => ({
+			transform: `
+			scale(${styles[0]})
+			translate(${styles[1].x}px, ${styles[1].y}px)
+			`,
 		}));
 	}
 
@@ -92,7 +101,7 @@ export class CanvasComponent implements OnInit {
 	}
 
 	@dispatch() updateCanvasPosition = () => {
-		return this.canvasActions.updatePosition({
+		return this.canvasActions.updateTopLeft({
 			x: this.canvasRef.nativeElement.getBoundingClientRect().left,
 			y: this.canvasRef.nativeElement.getBoundingClientRect().top,
 		});
