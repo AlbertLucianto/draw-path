@@ -19,10 +19,10 @@ import { createPentool } from './pentool.model';
 const doneAction = { type: 'DONE', payload: undefined, meta: undefined };
 
 const calcPositionInCanvas = (input: IPosition, boardState: IBoard): IPosition => {
-	const { moved, scale, topLeft } = boardState;
+	const { scale, topLeft } = boardState;
 	return {
-		x: (input.x - moved.x - topLeft.x) / scale,
-		y: (input.y - moved.y - topLeft.y) / scale,
+		x: (input.x - topLeft.x) / scale,
+		y: (input.y - topLeft.y) / scale,
 	};
 };
 

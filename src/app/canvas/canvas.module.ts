@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AnchorModule } from './anchor/anchor.module';
 import { CanvasActions } from './canvas.action';
 import { CanvasComponent } from './canvas.component';
+import { CanvasEpics } from './canvas.epics';
 import { DrawableComponent } from './drawable/drawable.component';
 import { DrawableDirective } from './drawable/drawable.directive';
 import { GroupComponent } from './group/group.component';
@@ -29,6 +30,7 @@ import { PathComponent } from './path/path.component';
 	providers: [
 		PathActions,
 		CanvasActions,
+		CanvasEpics,
 	],
 	exports: [
 		CanvasComponent,
